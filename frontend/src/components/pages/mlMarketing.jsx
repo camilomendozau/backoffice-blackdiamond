@@ -8,7 +8,7 @@ const MlMarketing = () => {
 
     return (
         <section>
-            <PageTitle title="MLM Marketing" />
+            <PageTitle title="Marketing Multinivel" />
 
             <section className="container py-8">
                 <section className="row">

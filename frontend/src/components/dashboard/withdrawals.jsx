@@ -7,16 +7,16 @@ import SuccessModal from "./components/successModalMsg";
 function Items({ currentItems }) {
     return (
         <section className="row">
-            <h4 className="text-center mt-5 mb-2">Your Withdrawal History</h4>
+            <h4 className="text-center mt-5 mb-2">Tu historial de retiros</h4>
             <section className="table-responsive">
                 <table className="table table-striped table-hover">
                     <thead className="table-primary">
                         <tr>
-                            <th scope="col">Date Requested</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Balance Before</th>
-                            <th scope="col">Balance After</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">Fecha de Solicitud</th>
+                            <th scope="col">Monto</th>
+                            <th scope="col">Balance Antes</th>
+                            <th scope="col">Balance Despues</th>
+                            <th scope="col">Estado</th>
                         </tr>
                     </thead>
 
@@ -49,7 +49,7 @@ function PaginatedItems({ itemsPerPage, data }) {
     // (This could be items from props; or items loaded in a local state
     // from an API endpoint with useEffect and useState)
     const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    console.log(`Cargando items de ${itemOffset} a ${endOffset}`);
     const currentItems = items.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(items.length / itemsPerPage);
 
@@ -57,7 +57,7 @@ function PaginatedItems({ itemsPerPage, data }) {
     const handlePageClick = (event) => {
         const newOffset = (event.selected * itemsPerPage) % items.length;
         console.log(
-            `User requested page number ${event.selected}, which is offset ${newOffset}`
+            `Numero de pagina de solicitud de usuario ${event.selected}, que es la compensacion ${newOffset}`
         );
         setItemOffset(newOffset);
     };
@@ -168,7 +168,7 @@ const Withdrawals = () => {
                     })
                 }
             } else {
-                console.error("User not authenticated");
+                console.error("Usuario no autenticado");
             }
         }
 
@@ -181,7 +181,7 @@ const Withdrawals = () => {
                 <div className="col">
                     <div className="card">
                         <div className="card-body text-center">
-                            <p className="card-text">Total Withdrawal Request</p>
+                            <p className="card-text">Total Solicitudes de Retiro</p>
                             <h5 className="card-title">{totalWithdrawalRequest}</h5>
                         </div>
                     </div>
@@ -189,7 +189,7 @@ const Withdrawals = () => {
                 <div className="col">
                     <div className="card text-center">
                         <div className="card-body">
-                            <p className="card-text">Pending Withdrawals</p>
+                            <p className="card-text">Retiros Pendientes</p>
                             <h5 className="card-title">{totalPendingRequest}</h5>
                         </div>
                     </div>
@@ -197,7 +197,7 @@ const Withdrawals = () => {
                 <div className="col">
                     <div className="card">
                         <div className="card-body text-center">
-                            <p className="card-text">Approved Withdrawals</p>
+                            <p className="card-text">Retiros Aprobados</p>
                             <h5 className="card-title">{totalApprovedRequest}</h5>
                         </div>
                     </div>
@@ -205,7 +205,7 @@ const Withdrawals = () => {
                 <div className="col">
                     <div className="card">
                         <div className="card-body text-center">
-                            <p className="card-text">Available Withdrawal</p>
+                            <p className="card-text">Retiros Disponibles</p>
                             <h5 className="card-title">{`N${userAccountInfo.total_balance}`}</h5>
                         </div>
                     </div>
@@ -216,17 +216,17 @@ const Withdrawals = () => {
                 <div className="col-lg-7 mx-auto">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="text-center">Withdrawal Request</h5>
-                            <p className="text-center">Enter Amount and wait for Approval</p>
+                            <h5 className="text-center">Solitar Retiro</h5>
+                            <p className="text-center">Ingresa un monto y espera para ser aprobado</p>
                             <form onSubmit={e => onAddSubmit(e)}>
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput2" class="form-label">Amount</label>
+                                    <label for="formGroupExampleInput2" class="form-label">Monto</label>
                                     <input
                                         type="number"
                                         name="amount"
                                         className="form-control inputfield"
                                         id="amount"
-                                        placeholder="Enter Amount to withdraw..."
+                                        placeholder="Ingresa un monto para retirar..."
                                         value={amount}
                                         onChange={e => onChange(e)}
                                         required
@@ -243,7 +243,7 @@ const Withdrawals = () => {
                                             :
                                             null
                                         }
-                                        Submit Request
+                                        Enviar Solicitud
                                     </button>
                                 </section>
                             </form>
@@ -256,8 +256,8 @@ const Withdrawals = () => {
                 Object.keys(withdrawalListReversed).length === 0
                     ?
                     <section className="text-center">
-                        <h4 className="mt-8">Your Withdrawal History</h4>
-                        <p>You are yet to make a Withdrawal Request</p>
+                        <h4 className="mt-8">Tu historial de retiros</h4>
+                        <p>Todavia no has realizado ninguna solicitud</p>
                     </section>
                     :
                     <PaginatedItems itemsPerPage={6} data={withdrawalListReversed} />
@@ -270,8 +270,8 @@ const Withdrawals = () => {
                 showAddSuccess
                     ?
                     <SuccessModal
-                        title='Withdrawal Submitted'
-                        message='Your withdrawal request has been successfully submitted and is now pending approval'
+                        title='Solicitud de Retiro Enviada'
+                        message='Tu solicitud de retiro ha sido enviada exitosamente. Espera a que sea aprobada.'
                         show={showAddSuccess}
                         onClose={handleAddSuccessClose}
                     />

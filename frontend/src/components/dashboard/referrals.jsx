@@ -6,17 +6,17 @@ import CopyToClipboardButton from "./components/clipCopy";
 function Items({ currentItems }) {
     return (
         <section>
-            <h4 className="text-center mt-8 mb-2">Your Referrals</h4>
+            <h4 className="text-center mt-8 mb-2">Tus Referidos</h4>
 
             <section className="table-responsive">
                 <table className="table table-striped table-hover">
                     <thead className="table-primary">
                         <tr>
-                            <th scope="col">Date Joined</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Fecha de union</th>
+                            <th scope="col">Nombre</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Phone Number</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">Numero de Telefono</th>
+                            <th scope="col">Estado</th>
                         </tr>
                     </thead>
 
@@ -118,7 +118,7 @@ const Referrals = () => {
                             <CopyToClipboardButton text={userInfo.code} />
                         </section>
                         <div className="card-body text-center">
-                            <p className="card-text">Referral ID</p>
+                            <p className="card-text">ID de Referido</p>
                             <h5 className="card-title">{userInfo.code}</h5>
                         </div>
                     </div>
@@ -126,7 +126,7 @@ const Referrals = () => {
                 <div className="col">
                     <div className="card text-center">
                         <div className="card-body">
-                            <p className="card-text">Total Referrals</p>
+                            <p className="card-text">Total de Referidos</p>
                             <h5 className="card-title">{totalReferrals}</h5>
                         </div>
                     </div>
@@ -134,7 +134,7 @@ const Referrals = () => {
                 <div className="col">
                     <div className="card">
                         <div className="card-body text-center">
-                            <p className="card-text">Referrals Earnings</p>
+                            <p className="card-text">Ganancias de Referidos</p>
                             <h5 className="card-title">{`N${userAccountInfo.referral_bonus_earned}`}</h5>
                         </div>
                     </div>
@@ -145,8 +145,8 @@ const Referrals = () => {
                 Object.keys(referralList).length === 0
                     ?
                     <section className="text-center">
-                        <h4 className="mt-8">Your Referrals</h4>
-                        <p>Your Referral List is currently empty</p>
+                        <h4 className="mt-8">Tus Referidos</h4>
+                        <p>Tu lista de referidos esta vacia actualmente</p>
                     </section>
                     :
                     <PaginatedItems itemsPerPage={6} data={referralList} />

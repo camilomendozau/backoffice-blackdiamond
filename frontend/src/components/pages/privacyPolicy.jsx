@@ -9,7 +9,7 @@ const PrivacyPolicy = () => {
 
     return (
         <div className="">
-            <PageTitle title="Privacy Policies" />
+            <PageTitle title="Politicas de Privacidad" />
 
             <section className="container py-8">
                 <section className="row">

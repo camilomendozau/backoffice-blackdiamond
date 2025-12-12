@@ -57,8 +57,8 @@ const TestimonialGroup = () => {
                 <section class="py-8 testimonials bg-light">
                     <section class="container">
                         <header class="text-center mb-3">
-                            <h2 class="h2">Testimonials</h2>
-                            <h6 class="h6">What people say about Us</h6>
+                            <h2 class="h2">Testimonios</h2>
+                            <h6 class="h6">¿Que dicen las personas sobre nosotros?</h6>
                             <hr class="hr mx-auto" style={{ width: '10%' }} />
                         </header>
                         <Slider {...settings}>

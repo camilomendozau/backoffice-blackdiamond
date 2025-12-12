@@ -65,7 +65,7 @@ const ContactForm = () => {
     return (
         <div class="container py-8">
             <header class="text-center">
-                <h2 class="h2">Contact Us</h2>
+                <h2 class="h2">Contactanos</h2>
                 <hr class="hr mx-auto" style={{ width: '10%' }} />
             </header>
             <div class="row gy-3">
@@ -76,7 +76,7 @@ const ContactForm = () => {
                                 <i class="fa-solid fa-magnifying-glass-location  me-2 fs-4 text-primary bg-light p-3 rounded-circle"></i>
                             </section>
                             <section>
-                                <h5 class="h5">Head Office</h5>
+                                <h5 class="h5">Back Office</h5>
                                 <p class="d-inline">{companyInfo.company_address}</p>
                             </section>
                         </section>
@@ -89,7 +89,7 @@ const ContactForm = () => {
                                     <i class="fa-solid fa-envelope me-2 fs-4 text-primary bg-light p-3 rounded-circle"></i>
                                 </section>
                                 <section>
-                                    <h5 class="h5">Email</h5>
+                                    <h5 class="h5">Correo Electronico</h5>
                                     <span
                                         class="custom-icon"></span>
                                     <p class="d-inline">{companyInfo.email}</p>
@@ -105,7 +105,7 @@ const ContactForm = () => {
                                     <i class="fa-solid fa-phone-volume me-2 fs-4 text-primary bg-light p-3 rounded-circle"></i>
                                 </section>
                                 <section>
-                                    <h5 class="h5">Telephone</h5>
+                                    <h5 class="h5">Telefono</h5>
                                     <p class="d-inline">
                                         {companyInfo.telephone}</p>
                                 </section>
@@ -118,12 +118,12 @@ const ContactForm = () => {
                     <form onSubmit={e => onSubmit(e)}>
                         <section class="row gy-3">
                             <div class="col-lg-6">
-                                <label for="formGroupExampleInput" class="form-label">Full Name</label>
+                                <label for="formGroupExampleInput" class="form-label">Nombre Completo</label>
                                 <input
                                     type="text"
                                     class="form-control inputfield"
                                     id="formGroupExampleInput"
-                                    placeholder="Full Name"
+                                    placeholder="Jose Perez"
                                     name="name"
                                     onChange={e => onChange(e)}
                                     value={name}
@@ -131,13 +131,13 @@ const ContactForm = () => {
                                 />
                             </div>
                             <div class="col-lg-6">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                <label for="exampleInputEmail1" class="form-label">Direccion de Correo Electronico</label>
                                 <input
                                     type="email"
                                     class="form-control inputfield"
                                     id="exampleInputEmail1"
                                     aria-describedby="emailHelp"
-                                    placeholder="Email Address"
+                                    placeholder="test@test.com"
                                     name="email"
                                     onChange={e => onChange(e)}
                                     value={email}
@@ -145,12 +145,12 @@ const ContactForm = () => {
                                 />
                             </div>
                             <div class="col-lg-6">
-                                <label for="formGroupExampleInput" class="form-label">Phone Number</label>
+                                <label for="formGroupExampleInput" class="form-label">Numero de Telefono</label>
                                 <input
                                     type="text"
                                     class="form-control inputfield"
                                     id="formGroupExampleInput2"
-                                    placeholder="Phone Number"
+                                    placeholder="+591 66777654"
                                     name="phone_number"
                                     onChange={e => onChange(e)}
                                     maxLength='11'
@@ -159,12 +159,12 @@ const ContactForm = () => {
                                 />
                             </div>
                             <div class="col-lg-6">
-                                <label for="formGroupExampleInput" class="form-label">Location</label>
+                                <label for="formGroupExampleInput" class="form-label">Ubicacion</label>
                                 <input
                                     type="text"
                                     class="form-control inputfield"
                                     id="formGroupExampleInput3"
-                                    placeholder="Current Location"
+                                    placeholder="Cochabamba, Bolivia"
                                     name="location"
                                     onChange={e => onChange(e)}
                                     value={location}
@@ -172,12 +172,12 @@ const ContactForm = () => {
                                 />
                             </div>
                             <div class="col-lg-12">
-                                <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+                                <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
                                 <textarea
                                     class="form-control"
                                     id="exampleFormControlTextarea1"
                                     rows="4"
-                                    placeholder="Enter Message"
+                                    placeholder="Escribe tu mensaje aqui..."
                                     name="message"
                                     onChange={e => onChange(e)}
                                     value={message}
@@ -192,7 +192,7 @@ const ContactForm = () => {
                                         :
                                         null
                                     }
-                                    Send Message
+                                    Enviar Mensaje
                                 </button>
                             </div>
                         </section>

@@ -8,7 +8,7 @@ const TermsAndConditions = () => {
 
     return (
         <div className="">
-            <PageTitle title="Terms and Conditions" />
+            <PageTitle title="Terminos y Condiciones" />
 
             <section className="container py-8">
                 <section className="row">

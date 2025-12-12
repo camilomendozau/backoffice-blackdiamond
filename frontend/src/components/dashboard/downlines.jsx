@@ -5,17 +5,17 @@ import ReactPaginate from "react-paginate";
 function Items({ currentItems }) {
     return (
         <section>
-            <h4 class="text-center mt-8">Your Downlines</h4>
+            <h4 class="text-center mt-8">Tus lineas inferiores</h4>
 
             <section class="table-responsive">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Date Joined</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Fecha de Union</th>
+                            <th scope="col">Nombre</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Phone Number</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">Numero de Telefono</th>
+                            <th scope="col">Estado</th>
                         </tr>
                     </thead>
 
@@ -61,8 +61,8 @@ function PaginatedItems({ itemsPerPage, data }) {
     const handlePageClick = (event) => {
         const newOffset = (event.selected * itemsPerPage) % items.length;
         console.log(
-            `User requested page number ${event.selected}, which is offset ${newOffset}`
-        );
+            `Numero de pagina de solicitudes de usuario ${event.selected}, que es la paginacion ${newOffset}`
+        ); 
         setItemOffset(newOffset);
     };
 
@@ -114,7 +114,7 @@ const Downlines = () => {
                 <div class="col">
                     <div class="card">
                         <div class="card-body text-center">
-                            <p class="card-text">Current Downlines</p>
+                            <p class="card-text">Lineas Inferiores Actuales</p>
                             <h5 class="card-title">{totalDownline}</h5>
                         </div>
                     </div>
@@ -122,7 +122,7 @@ const Downlines = () => {
                 <div class="col">
                     <div class="card text-center">
                         <div class="card-body">
-                            <p class="card-text">Expected Downlines</p>
+                            <p class="card-text">Lineas Inferiores Esperadas</p>
                             <h5 class="card-title">{expectedDownline}</h5>
                         </div>
                     </div>
@@ -130,7 +130,7 @@ const Downlines = () => {
                 <div class="col">
                     <div class="card">
                         <div class="card-body text-center">
-                            <p class="card-text">Remaining Downlines</p>
+                            <p class="card-text">Lineas Inferiores Restantes</p>
                             <h5 class="card-title">{remainingDownline}</h5>
                         </div>
                     </div>
@@ -141,8 +141,8 @@ const Downlines = () => {
                 Object.keys(downlineList).length === 0
                     ?
                     <section className="text-center">
-                        <h4 className="mt-8">Your Downlines</h4>
-                        <p>Your Downline is currently empty</p>
+                        <h4 className="mt-8">Tus Lineas Inferiores</h4>
+                        <p>Tu linea inferior actualmente esta vacia.</p>
                     </section>
                     :
                     <PaginatedItems itemsPerPage={6} data={downlineList} />

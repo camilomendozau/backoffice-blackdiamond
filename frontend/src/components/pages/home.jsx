@@ -49,7 +49,7 @@ const Home = () => {
                 <section className="container py-8">
                     <section className="row">
                         <section className="col-lg-8 mx-auto">
-                            <h2 className="text-center">About Us</h2>
+                            <h2 className="text-center">Sobre Nosotros</h2>
                             <TextTruncate
                                 line={7}
                                 element="p"
@@ -57,7 +57,7 @@ const Home = () => {
                                 text={companyInfo.safe_about_body_html}
                             />
                             <div className='d-flex justify-content-center'>
-                                <Link to="/about" className='btn btn-primary mt-3'>Read More</Link>
+                                <Link to="/about" className='btn btn-primary mt-3'>Leer Mas</Link>
                             </div>
                         </section>
                     </section>
@@ -79,8 +79,8 @@ const Home = () => {
                 <section class="py-8 testimonials">
                     <section class="container">
                         <header class="text-center mb-3">
-                            <h2 class="h2">Photo Gallery</h2>
-                            <h6 class="h6">Photo Speaks</h6>
+                            <h2 class="h2">Galeria de Fotos</h2>
+                            <h6 class="h6">Fotos de Conferencia</h6>
                             <hr class="hr mx-auto" style={{ width: '10%' }} />
                         </header>
                         <div class="row row-cols-1 row-cols-lg-1 g-4 justify-content-center">

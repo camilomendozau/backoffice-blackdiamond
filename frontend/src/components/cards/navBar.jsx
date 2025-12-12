@@ -46,30 +46,30 @@ const NavBar = () => {
                                 <div className="navbar-nav justify-content-center flex-grow-1 pe-3" id="navbarNav">
                                     <ul className="navbar-nav">
                                         <li className="nav-item me-3" onClick={handleOffcanvasClose}>
-                                            <NavLink to="/" className='nav-link ps-2' aria-current="page">Home</NavLink>
+                                            <NavLink to="/" className='nav-link ps-2' aria-current="page">Inicio</NavLink>
                                         </li>
 
                                         <li className="nav-item me-3" onClick={handleOffcanvasClose}>
-                                            <NavLink to="/about" className='nav-link ps-2' aria-current="page">About</NavLink>
+                                            <NavLink to="/about" className='nav-link ps-2' aria-current="page">Nosotros</NavLink>
                                         </li>
                                         <li className="nav-item me-3" onClick={handleOffcanvasClose}>
-                                            <NavLink to="/services" className='nav-link ps-2'>Services</NavLink>
+                                            <NavLink to="/services" className='nav-link ps-2'>Servicios</NavLink>
                                         </li>
                                         <li className="nav-item me-3" onClick={handleOffcanvasClose}>
-                                            <NavLink to="/mlm-marketing" className='nav-link ps-2'>MLM Marketing</NavLink>
+                                            <NavLink to="/mlm-marketing" className='nav-link ps-2'>Multinivel</NavLink>
                                         </li>
                                         <li className="nav-item me-3" onClick={handleOffcanvasClose}>
-                                            <NavLink to="/contact" className='nav-link ps-2'>Contact</NavLink>
+                                            <NavLink to="/contact" className='nav-link ps-2'>Contacto</NavLink>
                                         </li>
                                     </ul>
                                     <span className="vstack d-lg-none .d-xl-block mt-3">
-                                        <Link className='btn btn-outline-primary text-decoration-none mb-3' to="/login">Log In</Link>
-                                        <Link className='btn btn-primary text-decoration-none' to="/signup">Create Account</Link>
+                                        <Link className='btn btn-outline-primary text-decoration-none mb-3' to="/login">Iniciar Sesion</Link>
+                                        <Link className='btn btn-primary text-decoration-none' to="/signup">Crear Cuenta</Link>
                                     </span>
                                 </div>
                                 <span className="d-none d-lg-block">
-                                    <Link className='btn btn-outline-primary text-decoration-none me-1' to="/login">Log In</Link>
-                                    <Link className='btn btn-primary text-decoration-none' to="/signup">Create Account</Link>
+                                    <Link className='btn btn-outline-primary text-decoration-none me-1' to="/login">Iniciar Sesion</Link>
+                                    <Link className='btn btn-primary text-decoration-none' to="/signup">Crear Cuenta</Link>
                                 </span>
                             </div>
                         </Offcanvas.Body>

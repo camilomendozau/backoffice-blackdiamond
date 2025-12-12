@@ -74,23 +74,23 @@ function Login({ login, isAuthenticated, error }) {
                                 </header>
                             </Link>
 
-                            <h3 className="text-center mb-2">Welcome Back!</h3>
+                            <h3 className="text-center mb-2">Bienvenid@ de nuevo!</h3>
                             {error ?
                                 <div className="alert alert-danger fw-bold mt-3" role="alert">
-                                    Invalid Email/Password
+                                    Correo Electronico / Contraseña Invalidos
                                 </div>
                                 :
                                 null}
 
                             <form className="mt-1" onSubmit={e => onSubmit(e)}>
                                 <div className="mb-3">
-                                    <label for="email" className="form-label">Email</label>
+                                    <label for="email" className="form-label">Correo Electronico</label>
                                     <input type="email" className="form-control inputfield" id="email" aria-describedby="emailHelp"
                                         name="email" value={email} onChange={e => onChange(e)} required />
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                                    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
                                     <input type="password" class="form-control inputfield" id="exampleInputPassword1"
                                         name="password" value={password} onChange={e => onChange(e)}
                                         minLength='6' required />
@@ -98,12 +98,11 @@ function Login({ login, isAuthenticated, error }) {
                                 <div class="d-flex justify-content-between">
                                     <div class="mb-3 form-check">
                                         <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                                        <label class="form-check-label" for="exampleCheck1"><small class="fw-bold">Remember
-                                            Login</small></label>
+                                        <label class="form-check-label" for="exampleCheck1"><small class="fw-bold">Recordar Sesion</small></label>
                                     </div>
                                     <div>
-                                        <Link to="/reset-password" class="text-end text-decoration-none fw-bold"><small>Forgot
-                                            Password?</small></Link>
+                                        <Link to="/reset-password" class="text-end text-decoration-none fw-bold"><small>Olvidaste 
+                                            tu contraseña?</small></Link>
                                     </div>
                                 </div>
 
@@ -120,8 +119,8 @@ function Login({ login, isAuthenticated, error }) {
 
 
                                 <div class="mt-3">
-                                    <p class="text-center">Don't have an account? <Link to="/signup" class="fw-bold text-decoration-none">Create
-                                        Account</Link></p>
+                                    <p class="text-center">No tienes una cuenta? <Link to="/signup" class="fw-bold text-decoration-none">Crear
+                                        Cuenta</Link></p>
                                 </div>
                             </form>
                         </section>

@@ -57,15 +57,15 @@ const EmailSub = () => {
         <section className="py-8 email bg-light">
             <section className="container">
                 <header className="text-center ">
-                    <h2 className="h2 text-primary fw-bolder">Subscribe to our Newsletter</h2>
-                    <h6 className="h6 text-primary">Recieve exclusive updates straight to your inbox</h6>
+                    <h2 className="h2 text-primary fw-bolder">Suscribete a nuestras Noticias</h2>
+                    <h6 className="h6 text-primary">Recibe actualizaciones exclusivas directamente en tu correo electronico</h6>
                 </header>
 
                 <section className="row justify-content-center mt-2">
                     <section className="col-lg-6">
                         <form onSubmit={e => onSubmit(e)}>
                             <div Name="mb-1">
-                                <label for="inputEmail3" className="form-label">Email</label>
+                                <label for="inputEmail3" className="form-label">Correo Electronico</label>
                                 <input
                                     type="email"
                                     className="form-control inputfield"
@@ -86,7 +86,7 @@ const EmailSub = () => {
                                     />
                                     <label className="form-check-label " for="gridCheck">
                                         <small>
-                                            By submitting you agree to the <Link to="privacy-policy" className="text-decoration-none fw-bold">Privacy Policy</Link> and <Link to="terms-and-conditions" className="text-decoration-none fw-bold">Terms and Conditions</Link>
+                                            Para enviar necesitamos que aceptes nuestra <Link to="privacy-policy" className="text-decoration-none fw-bold">Politica de Privacidad</Link> y <Link to="terms-and-conditions" className="text-decoration-none fw-bold">Terminos y Condiciones</Link>
                                         </small>
                                     </label>
                                 </div>
@@ -100,7 +100,7 @@ const EmailSub = () => {
                                             null
                                         }
 
-                                        Subscribe
+                                        Suscribirse
                                     </button>
                                 </div>
                             </div>
@@ -116,14 +116,14 @@ const EmailSub = () => {
                 keyboard={false}
             >
                 <Modal.Header>
-                    <Modal.Title>Thank you</Modal.Title>
+                    <Modal.Title>Gracias</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    Thank you for subscribing to our email marketing. You are sure to recieve latest updates from us on-the-go.
+                    Gracias por suscribirte a nuestro correo de marketing. Seguramente reciviras las ultimas noticias de nosotros.
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={handleClose}>
-                        Close
+                        Cerrar
                     </Button>
                 </Modal.Footer>
             </Modal>

@@ -11,7 +11,7 @@ const About = () => {
 
     return (
         <div className="">
-            <PageTitle title="About Us" />
+            <PageTitle title="Sobre Nosotros" />
             <CoreValueGroup />
 
             {companyInfo.company_history
@@ -19,7 +19,7 @@ const About = () => {
                 <section className="container py-8">
                     <section className="row">
                         <section className="col-lg-8 mx-auto">
-                            <h2 className="text-center">Our History</h2>
+                            <h2 className="text-center">Nuestra Historia</h2>
                             {parse(`${companyInfo.company_history}`)}
                         </section>
                     </section>

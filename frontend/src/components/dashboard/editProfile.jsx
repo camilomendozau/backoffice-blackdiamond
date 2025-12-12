@@ -108,13 +108,13 @@ function EditProfile() {
 
     return (
         <div className="container mt-3 pb-5">
-            <h2 className="text-center">Edit Profile</h2>
+            <h2 className="text-center">Editar Perfil</h2>
             <div>
                 <form className="row" onSubmit={e => onSubmit(e)}>
                     <div className="col-lg-9 mx-auto">
                         <section className="row g-3">
                             <section className="col-12 mt-5">
-                                <h5 className="text-center">Profile Picture</h5>
+                                <h5 className="text-center">Imagen de Perfil</h5>
                             </section>
                             <section>
                                 <img src={get_photo_url} className="d-flex justify-content-center align-items-center rounded-circle mx-auto" width="200" height="200" alt="..." />
@@ -129,15 +129,15 @@ function EditProfile() {
                                     // value={formData.image}
                                     onChange={e => onProfilePicChange(e)}
                                 />
-                                <label className="input-group-text" for="inputGroupFile02">Upload</label>
+                                <label className="input-group-text" for="inputGroupFile02">Subir</label>
                             </div>
 
                             <section className="col-12 mt-5">
-                                <h5 className="text-center">Personal Information</h5>
+                                <h5 className="text-center">Informacion Personal</h5>
                             </section>
 
                             <div className="col-md-6">
-                                <label for="first_name" className="form-label">First Name</label>
+                                <label for="first_name" className="form-label">Nombres</label>
                                 <input
                                     type="text"
                                     className="form-control inputfield"
@@ -148,7 +148,7 @@ function EditProfile() {
                                     required />
                             </div>
                             <div className="col-md-6">
-                                <label for="last_name" className="form-label">Last Name</label>
+                                <label for="last_name" className="form-label">Apellidos</label>
                                 <input
                                     type="text"
                                     className="form-control inputfield"
@@ -173,7 +173,7 @@ function EditProfile() {
                                 />
                             </div>
                             <div className="col-md-6">
-                                <label for="phone_number" className="form-label">Phone Number</label>
+                                <label for="phone_number" className="form-label">Numero de Telefono</label>
                                 <input
                                     type="text"
                                     className="form-control inputfield"
@@ -187,15 +187,15 @@ function EditProfile() {
                             </div>
 
                             <div className="col-md-6">
-                                <label for="gender-select" className="form-label">Gender</label>
+                                <label for="gender-select" className="form-label">Genero</label>
                                 <select id="gender-select" className="form-select inputfield" aria-label="Default select example" value={selectedOption === '' ? formData.gender : selectedOption} onChange={handleOptionChange}>
-                                    <option selected>-- Select --</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option selected>-- Selecciona --</option>
+                                    <option value="Male">Masculino</option>
+                                    <option value="Female">Femenino</option>
                                 </select>
                             </div>
                             <div className="col-md-6">
-                                <label for="date_of_birth" className="form-label">Date of Birth <small className="text-primary fw-bold">(YYYY-MM-DD)</small></label>
+                                <label for="date_of_birth" className="form-label">Fecha de Nacimiento<small className="text-primary fw-bold">(YYYY-MM-DD)</small></label>
                                 <input
                                     type="text"
                                     // pattern="\d{4}-\d{2}-\d{2}"
@@ -208,11 +208,11 @@ function EditProfile() {
                             </div>
 
                             <section className="col-12 mt-5">
-                                <h5 className="text-center">Bank Information</h5>
+                                <h5 className="text-center">Informacion Bancaria</h5>
                             </section>
 
                             <div className="col-md-6">
-                                <label for="bank_name" class="form-label">Bank Name</label>
+                                <label for="bank_name" class="form-label">Nombre del Banco</label>
                                 <input
                                     type="text"
                                     className="form-control inputfield"
@@ -223,7 +223,7 @@ function EditProfile() {
                                     required />
                             </div>
                             <div className="col-md-6">
-                                <label for="account_name" class="form-label">Account Name</label>
+                                <label for="account_name" class="form-label">Nombre de propietario</label>
                                 <input
                                     type="text"
                                     className="form-control inputfield"
@@ -234,7 +234,7 @@ function EditProfile() {
                                     required />
                             </div>
                             <div className="col-md-6">
-                                <label for="account_number" className="form-label">Account Number</label>
+                                <label for="account_number" className="form-label">Numero de Cuenta</label>
                                 <input
                                     type="text"
                                     className="form-control inputfield"
@@ -246,10 +246,10 @@ function EditProfile() {
                             </div>
 
                             <section className="col-12 mt-5">
-                                <h5 className="text-center">Contact Address</h5>
+                                <h5 className="text-center">Direccion de Contacto</h5>
                             </section>
                             <div className="col-12">
-                                <label for="home_address" className="form-label">Residential Address</label>
+                                <label for="home_address" className="form-label">Direccion de Vivienda</label>
                                 <textarea
                                     className="form-control"
                                     id="home_address"
@@ -261,7 +261,7 @@ function EditProfile() {
                                 ></textarea>
                             </div>
                             <div className="col-md-6">
-                                <label for="local_govt" className="form-label">Local Government</label>
+                                <label for="local_govt" className="form-label">Municipio</label>
                                 <input
                                     type="text"
                                     className="form-control inputfield"
@@ -272,7 +272,7 @@ function EditProfile() {
                                     required />
                             </div>
                             <div className="col-md-6">
-                                <label for="state_of_origin" className="form-label">State of Origin</label>
+                                <label for="state_of_origin" className="form-label">Pais de Origen</label>
                                 <input
                                     type="text"
                                     className="form-control inputfield"
@@ -284,7 +284,7 @@ function EditProfile() {
                             </div>
 
                             <div className="col-md-6">
-                                <label for="nationality" className="form-label">Nationality</label>
+                                <label for="nationality" className="form-label">Nacionalidad</label>
                                 <input
                                     type="text"
                                     className="form-control inputfield"
@@ -307,7 +307,7 @@ function EditProfile() {
                                     :
                                     null
                                 }
-                                Update Profile
+                                Actualizar Perfil
                             </button>
                         </section>
                     </div>
@@ -331,8 +331,8 @@ function EditProfile() {
                 errorshow
                     ?
                     <SuccessModal
-                        title='Fix the Error(s) Below!!!'
-                        message='The following error has occured!!!'
+                        title='Soluciona el error abajo!!!'
+                        message='El siguiente error a sucedido!!!'
                         show={errorshow}
                         onClose={handleErrorClose}
                         errorMessage={errorMessage}

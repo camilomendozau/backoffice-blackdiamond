@@ -9,7 +9,7 @@ const Services = () => {
 
     return (
         <div className="">
-            <PageTitle title="Services" />
+            <PageTitle title="Servicios" />
 
             {Object.keys(ServiceList).length === 0
                 ?

@@ -73,7 +73,7 @@ const Payments = () => {
                     console.log(err);
                 }
             } else {
-                console.error("User not authenticated");
+                console.error("Usuario no autenticado");
             }
         }
 
@@ -98,10 +98,10 @@ const Payments = () => {
                             setPaymentData(res.data)
                         })
                 } catch (err) {
-                    console.error("User not authenticated");
+                    console.error("Usuario no autenticado");
                 }
             } else {
-                console.error("User not authenticated");
+                console.error("Usuario no autenticado");
             }
         }
 
@@ -114,7 +114,7 @@ const Payments = () => {
                 <div className="col">
                     <div className="card">
                         <div className="card-body text-center">
-                            <p className="card-text">Payment PIN</p>
+                            <p className="card-text">PIN de pago</p>
                             <h5 className="card-title">{firstItem ? paymentData[0].pin : null}</h5>
                         </div>
                     </div>
@@ -122,7 +122,7 @@ const Payments = () => {
                 <div className="col">
                     <div className="card text-center">
                         <div className="card-body">
-                            <p className="card-text">Payment Status</p>
+                            <p className="card-text">Estado de Pagos</p>
                             <h5 className="card-title">{firstItem ? paymentData[0].status : null}</h5>
                         </div>
                     </div>
@@ -130,7 +130,7 @@ const Payments = () => {
                 <div className="col">
                     <div className="card text-center">
                         <div className="card-body">
-                            <p className="card-text">Current Plan</p>
+                            <p className="card-text">Plan Actual</p>
                             <h5 className="card-title">{userInfo.plan}</h5>
                         </div>
                     </div>
@@ -145,21 +145,21 @@ const Payments = () => {
                     <section className="card mt-6">
                         <section className="row row-cols-1 row-cols-lg-2 g-4 p-4">
                             <div className="col">
-                                <h3 className="text-center mb-3">Payment Information</h3>
+                                <h3 className="text-center mb-3">Informacion de pago</h3>
                                 <section className="table-responsive">
                                     <table class="table ">
                                         <thead className="table-primary">
                                             <tr>
-                                                <th scope="col" colspan="2" className="text-center">Payment Data</th>
+                                                <th scope="col" colspan="2" className="text-center">Datos de pago</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Date Created:</td>
+                                                <td>Fecha de creacion:</td>
                                                 <td>{firstItem ? paymentData[0].date : null}</td>
                                             </tr>
                                             <tr>
-                                                <td>Payment PIN:</td>
+                                                <td>PIN de pago:</td>
                                                 <td>
                                                     {firstItem ? paymentData[0].pin : null}
                                                     <span className="ms-3">
@@ -168,15 +168,15 @@ const Payments = () => {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Amount:</td>
+                                                <td>Monto:</td>
                                                 <td>{firstItem ? <>N{paymentData[0].amount}</> : null}</td>
                                             </tr>
                                             <tr>
-                                                <td>Purpose:</td>
-                                                <td>One-time registration fee</td>
+                                                <td>Proposito:</td>
+                                                <td>Tasa de registro unica</td>
                                             </tr>
                                             <tr>
-                                                <td>Status:</td>
+                                                <td>Estado:</td>
                                                 <td>
                                                     {firstItem
                                                         ?
@@ -194,18 +194,18 @@ const Payments = () => {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Actions:</td>
+                                                <td>Acciones:</td>
                                                 <td>
                                                     <span className="btn btn-primary btn-sm me-2"
                                                         onClick={() => handleEdit(paymentData[0])}
                                                     >
                                                         <i class="fa-solid fa-upload me-1"></i>
-                                                        Upload Payment Proof
+                                                        Subir comprobante de pago
                                                     </span>
 
                                                     {firstItem && paymentData[0].payment_proof
                                                         ?
-                                                        <a href={firstItem ? paymentData[0].get_image_url : null} target="_blank" rel="noreferrer"><span className="btn btn-info btn-sm me-2"><i class="fa-solid fa-image me-1"></i>View</span></a>
+                                                        <a href={firstItem ? paymentData[0].get_image_url : null} target="_blank" rel="noreferrer"><span className="btn btn-info btn-sm me-2"><i class="fa-solid fa-image me-1"></i>Vista</span></a>
                                                         :
                                                         <span className="btn btn-info btn-sm disabled"><i class="fa-solid fa-image me-1"></i>View</span>
                                                     }
@@ -217,7 +217,7 @@ const Payments = () => {
                             </div>
 
                             <div class="col">
-                                <h3 className="text-center mb-3">Payment Instructions</h3>
+                                <h3 className="text-center mb-3">Instrucciones de pago</h3>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque qui et animi deserunt libero esse rem necessitatibus? Modi voluptatum incidunt mollitia, ducimus optio, aspernatur nam fuga exercitationem tenetur eaque vero eveniet excepturi? Reprehenderit sequi, quisquam voluptatibus accusamus sit eaque in distinctio laboriosam totam eum beatae tenetur inventore nihil, nesciunt eos laudantium quasi modi quod nostrum culpa repellat illo! Minima, voluptatum?</p>
                             </div>
                         </section>
@@ -229,8 +229,8 @@ const Payments = () => {
                 showAddSuccess
                     ?
                     <SuccessModal
-                        title='Upload Success'
-                        message='you have successfully uploaded Payment Proof'
+                        title='Carga Completada'
+                        message='Has cargado el comprobante de pago correctamente'
                         show={showAddSuccess}
                         onClose={handleAddSuccessClose}
                     />
@@ -247,7 +247,7 @@ const Payments = () => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Upload Payment Proof
+                        Subir Comprobante de Pago
                     </Modal.Title>
                 </Modal.Header>
 
@@ -262,7 +262,7 @@ const Payments = () => {
                                 onChange={e => onPaymentFormChange(e)}
                                 required
                             />
-                            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                            <label class="input-group-text" for="inputGroupFile02">Cargar</label>
                         </div>
                         <section className="d-grid">
                             <button
@@ -275,7 +275,7 @@ const Payments = () => {
                                     :
                                     null
                                 }
-                                Submit
+                                Enviar
                             </button>
                         </section>
                     </form>

@@ -36,7 +36,7 @@ function DashboardHome() {
                 <div class="col">
                     <div class="card">
                         <div class="card-body text-center" >
-                            <p class="card-text">Total Balance</p>
+                            <p class="card-text">Balance Total</p>
                             <h5 class="card-title">{`N${userAccountInfo.total_balance}`}</h5>
                         </div>
                     </div>
@@ -44,7 +44,7 @@ function DashboardHome() {
                 <div class="col">
                     <div class="card text-center">
                         <div class="card-body">
-                            <p class="card-text">Total Downlines</p>
+                            <p class="card-text">Total de lineas</p>
                             <h5 class="card-title">{totalDownline}</h5>
                         </div>
                     </div>
@@ -52,7 +52,7 @@ function DashboardHome() {
                 <div class="col">
                     <div class="card">
                         <div class="card-body text-center">
-                            <p class="card-text">Match Bonus</p>
+                            <p class="card-text">Bonos por Unir</p>
                             <h5 class="card-title">{`N${userAccountInfo.match_bonus_earned}`}</h5>
                         </div>
                     </div>
@@ -60,7 +60,7 @@ function DashboardHome() {
                 <div class="col">
                     <div class="card text-center">
                         <div class="card-body">
-                            <p class="card-text">Referral Bonus</p>
+                            <p class="card-text">Bonos por Referido</p>
                             <h5 class="card-title">{`N${userAccountInfo.referral_bonus_earned}`}</h5>
                         </div>
                     </div>
@@ -78,7 +78,7 @@ function DashboardHome() {
                             </section>
 
                             <header className="text-center mb-1">
-                                <h4 className="card-title">Level {userAccountInfo.depth}</h4>
+                                <h4 className="card-title">Nivel {userAccountInfo.depth}</h4>
                                 <span className={userInfo.status === 'Active' ? 'badge rounded-pill bg-primary me-1' : 'badge rounded-pill bg-danger me-1'}>
                                     {userInfo.status}
                                 </span>
@@ -91,13 +91,13 @@ function DashboardHome() {
                                 <table class="table ">
                                     <thead class="table-primary">
                                         <tr>
-                                            <th scope="col" colspan="2" class="text-center">Bio-Data</th>
+                                            <th scope="col" colspan="2" class="text-center">Datos Personales</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Sponsored ID:</td>
+                                            <td>ID de Promotor:</td>
                                             <td>
                                                 {userInfo.code}
                                                 <span className="ms-3">
@@ -106,11 +106,11 @@ function DashboardHome() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>First Name:</td>
+                                            <td>Nombres:</td>
                                             <td>{userInfo.first_name}</td>
                                         </tr>
                                         <tr>
-                                            <td>Last Name:</td>
+                                            <td>Apellidos:</td>
                                             <td>{userInfo.last_name}</td>
                                         </tr>
                                         <tr>
@@ -118,23 +118,23 @@ function DashboardHome() {
                                             <td>{userInfo.email}</td>
                                         </tr>
                                         <tr>
-                                            <td>Date of Birth:</td>
+                                            <td>Fecha de Nacimiento:</td>
                                             <td>{userInfo.date_of_birth}</td>
                                         </tr>
                                         <tr>
-                                            <td>Gender:</td>
+                                            <td>Genero:</td>
                                             <td>{userInfo.gender}</td>
                                         </tr>
                                         <tr>
-                                            <td>Phone Number:</td>
+                                            <td>Numero de Telefono:</td>
                                             <td>{userInfo.phone_number}</td>
                                         </tr>
                                         <tr>
-                                            <td>Introduced by:</td>
+                                            <td>Recomendado por:</td>
                                             <td>{userInfo.recommended_by_email}</td>
                                         </tr>
                                         <tr>
-                                            <td>Date Joined:</td>
+                                            <td>Fecha de union:</td>
                                             <td>{userInfo.date_joined}</td>
                                         </tr>
                                     </tbody>
@@ -142,21 +142,21 @@ function DashboardHome() {
                                 <table class="table ">
                                     <thead class="table-primary">
                                         <tr>
-                                            <th scope="col" colspan="2" class="text-center">Bank Account Information</th>
+                                            <th scope="col" colspan="2" class="text-center">Datos Bancarios</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Bank Name:</td>
+                                            <td>Nombre de Banco:</td>
                                             <td>{userInfo.bank_name}</td>
                                         </tr>
                                         <tr>
-                                            <td>Account Name:</td>
+                                            <td>Nombre de propietario:</td>
                                             <td>{userInfo.account_name}</td>
                                         </tr>
 
                                         <tr>
-                                            <td>Account Number:</td>
+                                            <td>Numero de Cuenta:</td>
                                             <td>{userInfo.account_number}</td>
                                         </tr>
                                     </tbody>
@@ -164,20 +164,20 @@ function DashboardHome() {
                                 <table class="table ">
                                     <thead class="table-primary">
                                         <tr>
-                                            <th scope="col" colspan="2" class="text-center">Address</th>
+                                            <th scope="col" colspan="2" class="text-center">Direccion</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>State of Origin:</td>
+                                            <td>Pais de origen:</td>
                                             <td>{userInfo.state_of_origin}</td>
                                         </tr>
                                         <tr>
-                                            <td>Local govt. of Origin:</td>
+                                            <td>Ciudad de origen:</td>
                                             <td>{userInfo.local_govt}</td>
                                         </tr>
                                         <tr>
-                                            <td>Residential Address:</td>
+                                            <td>Direccion de Residencia:</td>
                                             <td>{userInfo.home_address}</td>
                                         </tr>
                                     </tbody>
@@ -191,13 +191,13 @@ function DashboardHome() {
                     <div class="row">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title text-center mb-2">Latest Referrals</h5>
+                                <h5 class="card-title text-center mb-2">Ultimos Referidos</h5>
                                 <section class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead class="table-primary">
                                             <tr>
-                                                <th scope="col">First Name</th>
-                                                <th scope="col">Last Name</th>
+                                                <th scope="col">Nombres</th>
+                                                <th scope="col">Apellidos</th>
                                                 <th scope="col">Email</th>
                                             </tr>
                                         </thead>
@@ -206,7 +206,7 @@ function DashboardHome() {
                                             ?
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="3" class="text-center">No Referrals yet</td>
+                                                    <td colspan="3" class="text-center">No hay referidos todavia</td>
                                                 </tr>
                                             </tbody>
                                             :
@@ -221,7 +221,7 @@ function DashboardHome() {
                                             </tbody>
                                         }
                                     </table>
-                                    <Link to="/dashboard/referrals" className="d-grid btn btn-primary">See All</Link>
+                                    <Link to="/dashboard/referrals" className="d-grid btn btn-primary">Ver Todos</Link>
                                 </section>
                             </div>
                         </div>
@@ -230,13 +230,13 @@ function DashboardHome() {
                     <div class="row mt-3">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title text-center mb-2">Latest Downlines</h5>
+                                <h5 class="card-title text-center mb-2">Ultimas Lineas</h5>
                                 <section class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead class="table-primary">
                                             <tr>
-                                                <th scope="col">First Name</th>
-                                                <th scope="col">Last Name</th>
+                                                <th scope="col">Nombres</th>
+                                                <th scope="col">Apellidos</th>
                                                 <th scope="col">Email</th>
                                             </tr>
                                         </thead>
@@ -244,7 +244,7 @@ function DashboardHome() {
                                             ?
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="3" class="text-center">No Downline yet</td>
+                                                    <td colspan="3" class="text-center">No hay Lineas todavia</td>
                                                 </tr>
 
                                             </tbody>
@@ -261,7 +261,7 @@ function DashboardHome() {
                                             </tbody>
                                         }
                                     </table>
-                                    <Link to="/dashboard/downlines" className="d-grid btn btn-primary">See All</Link>
+                                    <Link to="/dashboard/downlines" className="d-grid btn btn-primary">Ver todo</Link>
                                 </section>
                             </div>
                         </div>
@@ -270,15 +270,15 @@ function DashboardHome() {
                     <div class="row mt-3">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title text-center mb-2">Withdrawal Requests</h5>
+                                <h5 class="card-title text-center mb-2">Solicitudes de Retiro</h5>
                                 <section class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead class="table-primary">
                                             <tr>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Amount</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Current Amount</th>
+                                                <th scope="col">Fecha</th>
+                                                <th scope="col">Monto</th>
+                                                <th scope="col">Estado</th>
+                                                <th scope="col">Monto Actual</th>
                                             </tr>
                                         </thead>
 
@@ -286,7 +286,7 @@ function DashboardHome() {
                                             ?
                                             <tbody>
                                                 <tr>
-                                                    <td colspan="4" class="text-center">You are yet to make a Withdrawal Request</td>
+                                                    <td colspan="4" class="text-center">Todavia no has solictado ningun retiro</td>
                                                 </tr>
                                             </tbody>
                                             :
@@ -303,7 +303,7 @@ function DashboardHome() {
                                         }
 
                                     </table>
-                                    <Link to="/dashboard/withdrawals" className="d-grid btn btn-primary">See All</Link>
+                                    <Link to="/dashboard/withdrawals" className="d-grid btn btn-primary">Ver Todos</Link>
                                 </section>
                             </div>
                         </div>

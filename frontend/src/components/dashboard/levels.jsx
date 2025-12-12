@@ -31,10 +31,10 @@ const Levels = () => {
                         setLevelInformation(res.data)
                     })
             } catch (err) {
-                console.error("User not authenticated");
+                console.error("Usuario no autenticado");
             }
         } else {
-            console.error("User not authenticated");
+            console.error("Usuario no autenticado");
         }
     }
 
@@ -44,7 +44,7 @@ const Levels = () => {
                 <div className="col">
                     <div className="card">
                         <div className="card-body text-center">
-                            <p className="card-text">Current Level</p>
+                            <p className="card-text">Nivel Actual</p>
                             <h5 className="card-title">{userInfoBalance.depth}</h5>
                         </div>
                     </div>
@@ -52,7 +52,7 @@ const Levels = () => {
                 <div className="col">
                     <div className="card text-center">
                         <div className="card-body">
-                            <p className="card-text">Current Plan</p>
+                            <p className="card-text">Plan Actual</p>
                             <h5 className="card-title">{userInfo.plan}</h5>
                         </div>
                     </div>
@@ -60,23 +60,23 @@ const Levels = () => {
                 <div className="col">
                     <div className="card">
                         <div className="card-body text-center">
-                            <p className="card-text">My Downlines</p>
+                            <p className="card-text">Mis Lineas Inferiores</p>
                             <h5 className="card-title">{totalDownline}</h5>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <h4 className="text-center mt-5 mb-2">Level Information</h4>
+            <h4 className="text-center mt-5 mb-2">Informacion de Nivel</h4>
 
             <section className="table-responsive">
                 <table className="table table-striped table-hover">
                     <thead className="table-primary">
                         <tr>
-                            <th scope="col">Levels</th>
-                            <th scope="col">Expected Downlines</th>
-                            <th scope="col">Match Bonus</th>
-                            <th scope="col">Rewards</th>
+                            <th scope="col">Niveles</th>
+                            <th scope="col">Lineas inferiores esperadas</th>
+                            <th scope="col">Bonos por haber unido</th>
+                            <th scope="col">Premios</th>
                         </tr>
                     </thead>
 
@@ -84,7 +84,7 @@ const Levels = () => {
                         {levelInformation.map((item) =>
                             <tr key={item.id}>
                                 <td>Level {item.level}</td>
-                                <td>{item.expected_downlines} Downlines</td>
+                                <td>{item.expected_downlines} Lineas inferiores</td>
                                 <td>N{item.expected_match_bonus}</td>
                                 <td>{item.additional_reward}</td>
                             </tr>

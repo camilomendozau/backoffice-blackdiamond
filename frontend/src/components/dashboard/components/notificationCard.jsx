@@ -40,10 +40,10 @@ const NotificationCard = ({ popover }) => {
 
                 })
             } catch (err) {
-                console.error("User not authenticated");
+                console.error("Usuario no autenticado");
             }
         } else {
-            console.error("User not authenticated");
+            console.error("Usuario no autenticado");
         }
     };
 
@@ -59,7 +59,7 @@ const NotificationCard = ({ popover }) => {
                             action
                         >
                             <div className="ms-2 me-auto fw-bold">
-                                No Notifications
+                                No hay Notificaciones
                             </div>
                         </ListGroup.Item>
                         :
@@ -84,7 +84,7 @@ const NotificationCard = ({ popover }) => {
                                         {item.message}
                                     </div>
                                     <Badge bg={item.is_read === false ? "danger" : "primary"} pill>
-                                        {item.is_read === false ? "Unread" : "Read"}
+                                        {item.is_read === false ? "No Leido" : "Leido"}
                                     </Badge>
                                 </ListGroup.Item>
                             ))}
@@ -99,7 +99,7 @@ const NotificationCard = ({ popover }) => {
                             action
                         >
                             <Link className="ms-2 me-auto fw-bolder text-decoration-none">
-                                See All Notifications
+                                Ver todas las notificaciones
                             </Link>
                         </ListGroup.Item>
                         :

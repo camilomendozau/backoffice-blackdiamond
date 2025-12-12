@@ -38,7 +38,7 @@ const SuccessModal = ({ title, message, show, onClose, errorMessage }) => {
 
             <Modal.Footer className='d-flex justify-content-center'>
                 <Button variant="btn btn-danger" onClick={onClose} >
-                    Close
+                    Cerrar
                 </Button>
             </Modal.Footer>
         </Modal>

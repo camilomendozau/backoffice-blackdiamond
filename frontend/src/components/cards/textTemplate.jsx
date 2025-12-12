@@ -33,7 +33,7 @@ function TextListTemplate({ title, sub_title, description, pic, link }) {
                             {
                                 link
                                     ?
-                                    <Link className='btn btn-primary fw-normal mt-2' to={'/mlm-marketing'}>Read More</Link>
+                                    <Link className='btn btn-primary fw-normal mt-2' to={'/mlm-marketing'}>Leer Mas</Link>
                                     :
                                     null
                             }

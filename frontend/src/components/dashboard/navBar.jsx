@@ -74,10 +74,10 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                         setNotification(res.data)
                     })
             } catch (err) {
-                console.error("User not authenticated");
+                console.error("Usuario no autenticado");
             }
         } else {
-            console.error("User not authenticated");
+            console.error("Usuario no autenticado");
         }
     }
 
@@ -100,7 +100,7 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                 console.log(err);
             }
         } else {
-            console.error("User not authenticated");
+            console.error("Usuario no autenticado");
         }
     }
 
@@ -121,10 +121,10 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                         setDownlineData(res.data)
                     })
             } catch (err) {
-                console.error("User not authenticated");
+                console.error("Usuario no autenticado");
             }
         } else {
-            console.error("User not authenticated");
+            console.error("Usuario no autenticado");
         }
     }
 
@@ -145,10 +145,10 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                         setRefferalData(res.data)
                     })
             } catch (err) {
-                console.error("User not authenticated");
+                console.error("Usuario no autenticado");
             }
         } else {
-            console.error("User not authenticated");
+            console.error("Usuario no autenticado");
         }
     }
 
@@ -169,10 +169,10 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                         setWithdrawalData(res.data)
                     })
             } catch (err) {
-                console.error("User not authenticated");
+                console.error("Usuario no autenticado");
             }
         } else {
-            console.error("User not authenticated");
+            console.error("Usuario no autenticado");
         }
     }
 
@@ -193,10 +193,10 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                         setUserAccountinfo(res.data)
                     })
             } catch (err) {
-                console.error("User not authenticated");
+                console.error("Usuario no autenticado");
             }
         } else {
-            console.error("User not authenticated");
+            console.error("Usuario no autenticado");
         }
     }
 
@@ -237,47 +237,47 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                                                 <p className="nav-link h3 text-white my-2">
                                                     <img src={userInfo.get_photo_url} className="rounded-circle mx-auto me-1" width="40" height="40" alt="..." />
                                                     <span></span>
-                                                    Hi, {userInfo.first_name}
+                                                    Hola, {userInfo.first_name}
                                                 </p>
                                                 <li className='nav-link text-white py-1'>
                                                     <NavLink to="/dashboard" end className='text-decoration-none' aria-current="page">
                                                         <i className="fs-6 fa-solid fa-house"></i>
-                                                        <span className="ms-1 d-sm-inline">Dashboard</span>
+                                                        <span className="ms-1 d-sm-inline">Panel</span>
                                                     </NavLink>
                                                 </li>
 
                                                 <li class='nav-link py-1'>
                                                     <NavLink to="/dashboard/Withdrawals" end className='text-decoration-none' aria-current="page">
                                                         <i className="fs-6 fa-solid fa-money-bill-transfer"></i>
-                                                        <span className="ms-1 d-sm-inline">Withdrawals</span>
+                                                        <span className="ms-1 d-sm-inline">Retiros</span>
                                                     </NavLink>
                                                 </li>
 
                                                 <li className='nav-link py-1'>
                                                     <NavLink to="/dashboard/levels" end className='text-decoration-none' aria-current="page">
                                                         <i className="fs-6 fa-solid fa-list-check"></i>
-                                                        <span className="ms-1 d-sm-inline">Levels</span>
+                                                        <span className="ms-1 d-sm-inline">Niveles</span>
                                                     </NavLink>
                                                 </li>
 
                                                 <li class="nav-link py-1">
                                                     <NavLink to="/dashboard/downlines" end className='text-decoration-none' aria-current="page">
                                                         <i className="fs-6 fa-solid fa-timeline"></i>
-                                                        <span className="ms-1 d-sm-inline">Downlines</span>
+                                                        <span className="ms-1 d-sm-inline">Lineas Inferiores</span>
                                                     </NavLink>
                                                 </li>
 
                                                 <li class='nav-link py-1'>
                                                     <NavLink to="/dashboard/payments" end className='text-decoration-none' aria-current="page">
                                                         <i className="fs-6 fa-solid fa-key"></i>
-                                                        <span className="ms-1 d-sm-inline">Payment PIN</span>
+                                                        <span className="ms-1 d-sm-inline">PIN de pago</span>
                                                     </NavLink>
                                                 </li>
 
                                                 <li class="nav-link py-1">
                                                     <NavLink to="/dashboard/referrals" end className='text-decoration-none' aria-current="page">
                                                         <i className="fs-6 fa-solid fa-users"></i>
-                                                        <span className="ms-1 d-sm-inline">Referrals</span>
+                                                        <span className="ms-1 d-sm-inline">Referidos</span>
                                                     </NavLink>
                                                 </li>
 
@@ -291,7 +291,7 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                                                 <li class="nav-link py-1">
                                                     <NavLink to="/dashboard/notifications" end className='text-decoration-none' aria-current="page">
                                                         <i className="fs-6 fa-solid fa-bell"></i>
-                                                        <span className="ms-1 d-sm-inline">Notifications</span>
+                                                        <span className="ms-1 d-sm-inline">Notificaciones</span>
                                                     </NavLink>
                                                 </li>
                                             </ul>
@@ -299,7 +299,7 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                                             <div>
                                                 <Link className="nav-link pb-4 text-decoration-none" onClick={logout_user}>
                                                     <i class="fs-6 uil uil-signout"></i>
-                                                    <span className="ms-1 d-sm-inline">Sign Out</span>
+                                                    <span className="ms-1 d-sm-inline">Cerrar Sesion</span>
                                                 </Link>
                                             </div>
                                         </div>
@@ -326,7 +326,7 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                                                             <i className="fs-5 fa-solid fa-bell text-primary">
                                                                 <span className={isAnyNewNotification ? "position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1" : "position-absolute top-0 start-100 translate-middle"}>
                                                                     <span className="visually-hidden">
-                                                                        unread messages
+                                                                        Mensajes sin leer
                                                                     </span>
                                                                 </span>
                                                             </i>
@@ -341,8 +341,8 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                                                         </section>
 
                                                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
-                                                            <li><Link to='/dashboard/edit-profile' className="dropdown-item">Edit Profile</Link></li>
-                                                            <li><Link to='#' className="dropdown-item" onClick={logout_user}>Sign Out</Link></li>
+                                                            <li><Link to='/dashboard/edit-profile' className="dropdown-item">Editar Perfil</Link></li>
+                                                            <li><Link to='#' className="dropdown-item" onClick={logout_user}>Cerrar Sesion</Link></li>
                                                         </ul>
                                                     </div>
                                                 </section>

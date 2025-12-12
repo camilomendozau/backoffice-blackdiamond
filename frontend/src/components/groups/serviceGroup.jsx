@@ -14,8 +14,8 @@ const ServicesGroup = () => {
                     :
                     <section className="container py-8">
                         <header class="text-center mb-4">
-                            <h2 class="h2">What We Do</h2>
-                            <h6 class="h6">Our Top Notch Services</h6>
+                            <h2 class="h2">¿Que hacemos?</h2>
+                            <h6 class="h6">Nuestros Principales servicios</h6>
                             <hr class="hr mx-auto" style={{ width: "10%" }} />
                         </header>
                         <div className='row row-cols-1 row-cols-lg-3 g-6 justify-content-center'>

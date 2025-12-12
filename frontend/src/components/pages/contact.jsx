@@ -15,7 +15,7 @@ const Contact = () => {
     }, []);
     return (
         <div className="">
-            <PageTitle title="Contact Us" />
+            <PageTitle title="Contactanos" />
 
             {Object.keys(branchAddress).length === 0
                 ?
@@ -23,8 +23,8 @@ const Contact = () => {
                 :
                 <section className="container py-8 values">
                     <header className="text-center ">
-                        <h2 className="h2 text-center">Our Branch Offices</h2>
-                        <h6 className="h6">Locate any of our nearest Office to you</h6>
+                        <h2 className="h2 text-center">Nuestras oficinas</h2>
+                        <h6 className="h6">Encuentra nuestras oficinas mas cercanas a ti</h6>
                         <hr className="hr mx-auto" style={{ width: '10%' }} />
                     </header>
                     <div className="row row-cols-1 row-cols-lg-3 g-4 justify-content-center">
@@ -36,7 +36,7 @@ const Contact = () => {
                                             <i className="fa-solid fa-magnifying-glass-location  me-2 fs-4 text-primary bg-light p-3 rounded-circle"></i>
                                         </section>
 
-                                        <h5 className="card-title">{item.branch_name} Branch</h5>
+                                        <h5 className="card-title">{item.branch_name} Sucursal</h5>
                                         <p>{item.phone_number}</p>
                                         <p>{item.branch_address}</p>
                                     </div>

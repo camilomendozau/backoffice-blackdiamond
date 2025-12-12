@@ -18,7 +18,7 @@ const ServiceCard = ({ id, title, pic, description, slug }) => {
                             text={description}
                             className='card-title mt-1'
                         />
-                        <Link className='d-grid btn btn-primary fw-normal mt-2' to={'/services/' + slug}>Read More</Link>
+                        <Link className='d-grid btn btn-primary fw-normal mt-2' to={'/services/' + slug}>Leer Mas</Link>
                     </div>
                 </section>
             </section>

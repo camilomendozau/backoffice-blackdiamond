@@ -65,17 +65,17 @@ function ResetPassword({ reset_password, error, status }) {
                                 </header>
                             </Link>
 
-                            <h4 className="text-center">Reset Password</h4>
+                            <h4 className="text-center">Resetear Contraseña</h4>
                             <form className="mt-3" onSubmit={e => onSubmit(e)}>
                                 <div className="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                    <label for="exampleInputEmail1" class="form-label">Correo Electronico</label>
                                     <input
                                         type="email"
                                         className="form-control inputfield"
                                         id="email"
                                         aria-describedby="emailHelp"
                                         name="email"
-                                        placeholder="johnsmith@example.com"
+                                        placeholder="johnsmith@gmail.com"
                                         value={email}
                                         onChange={e => onChange(e)}
                                         required
@@ -94,11 +94,11 @@ function ResetPassword({ reset_password, error, status }) {
                                             ?
                                             <LoaderIcon />
                                             :
-                                            "Reset Password"
+                                            "Resetear Contraseña"
                                         }
                                     </button>
                                 </section>
-                                <Link className="d-flex justify-content-center btn btn-outline-primary mt-2" to="/login">Back to Login</Link>
+                                <Link className="d-flex justify-content-center btn btn-outline-primary mt-2" to="/login">Volver a Iniciar Sesion</Link>
                             </form>
                         </div>
                     </section>
@@ -110,18 +110,18 @@ function ResetPassword({ reset_password, error, status }) {
                         keyboard={false}
                     >
                         <Modal.Header closeButton>
-                            <Modal.Title>Email Sent</Modal.Title>
+                            <Modal.Title>Correo electronico enviado</Modal.Title>
                         </Modal.Header>
 
                         <Modal.Body>
-                            Instructions to reset your password has be sent to your <span className="fw-bold"> email</span>
+                            Las instrucciones para resetear tu contraseña se enviaran a tu <span className="fw-bold"> correo electronico</span>
                         </Modal.Body>
 
                         <Modal.Footer>
                             <Button variant="btn btn-outline-primary" onClick={handleClose}>
                                 Close
                             </Button>
-                            <Link className="btn btn-primary" to="/login">Login</Link>
+                            <Link className="btn btn-primary" to="/login">Iniciar Sesion</Link>
                         </Modal.Footer>
                     </Modal>
                 </section>

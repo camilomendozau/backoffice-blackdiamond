@@ -18,7 +18,7 @@ const Footer = () => {
                     {companyInfo.about_company
                         ?
                         <div className="col-lg">
-                            <h4 className="h4 text-white">About</h4>
+                            <h4 className="h4 text-white">Sobre Nosotros</h4>
                             <TextTruncate
                                 line={6}
                                 element="p"
@@ -36,7 +36,7 @@ const Footer = () => {
                         null
                         :
                         <div className="col-lg">
-                            <h4 className="h4 text-white">Services</h4>
+                            <h4 className="h4 text-white">Servicios</h4>
                             <ul className="list-group list-group-flush">
                                 {ServiceList.map(item =>
                                     <li key={item.id}><Link to='#' class="list-group-item bg-primary text-white"><i
@@ -49,27 +49,27 @@ const Footer = () => {
 
 
                     <div className="col-lg">
-                        <h4 className="h4 text-white">Quick Links</h4>
+                        <h4 className="h4 text-white">Links Rapidos</h4>
                         <ul className="list-group list-group-flush">
                             <li><Link to='/terms-and-conditions' className="list-group-item bg-primary text-white"><i
-                                className="fa-solid fa-angles-right me-1"></i>Terms & Conditions</Link></li>
+                                className="fa-solid fa-angles-right me-1"></i>Terminos y Condiciones</Link></li>
                             <li><Link to='/privacy-policy' className="list-group-item bg-primary text-white"><i
-                                class="fa-solid fa-angles-right me-1"></i>Privacy Policy</Link></li>
+                                class="fa-solid fa-angles-right me-1"></i>Politicas de Privacidad</Link></li>
                             <li><Link to='/contact' className="list-group-item bg-primary text-white"><i
-                                className="fa-solid fa-angles-right me-1"></i>Contact us</Link></li>
+                                className="fa-solid fa-angles-right me-1"></i>Contactanos</Link></li>
                             <li><Link to='/about' className="list-group-item bg-primary text-white"><i
-                                className="fa-solid fa-angles-right me-1"></i>About us</Link></li>
+                                className="fa-solid fa-angles-right me-1"></i>Sobre Nosotros</Link></li>
                         </ul>
                     </div>
                     <section className="col-lg">
-                        <h4 className="h4 text-white">MLM Marketing</h4>
+                        <h4 className="h4 text-white">Marketing Multinivel</h4>
                         <ul className="list-group list-group-flush">
                             <li><Link to='/mlm-marketing' className="list-group-item bg-primary text-white"><i
-                                className="fa-solid fa-angles-right me-1"></i>How it works</Link></li>
+                                className="fa-solid fa-angles-right me-1"></i>Como funciona</Link></li>
                             <li><Link to='/signup' className="list-group-item bg-primary text-white"><i
-                                className="fa-solid fa-angles-right me-1"></i>Create Account</Link></li>
+                                className="fa-solid fa-angles-right me-1"></i>Crear Cuenta</Link></li>
                             <li><Link to='/login' className="list-group-item bg-primary text-white"><i
-                                className="fa-solid fa-angles-right me-1"></i>Log in</Link></li>
+                                className="fa-solid fa-angles-right me-1"></i>Iniciar Sesion</Link></li>
                         </ul>
                     </section>
 
@@ -123,10 +123,10 @@ const Footer = () => {
 
 
 
-                    <small className="text-center">&#169; {companyInfo.company_name} {year.getFullYear()}. All rights Reserved</small>
-                    <small className="text-center">Designed and Developed by <a href="https://wa.me/message/SMDJVELK7COKN1"
+                    <small className="text-center">&#169; {companyInfo.company_name} {year.getFullYear()}. Todos los derechos reservados</small>
+                    <small className="text-center">Diseñado y Desarrollado por <a href="https://linktr.ee/winaytech" target="_blank"
                         className="text-decoration-none text-white fw-bold"
-                    >Codehub Technologies</a></small>
+                    >Winay Tech</a></small>
                 </section>
             </div>
         </div>

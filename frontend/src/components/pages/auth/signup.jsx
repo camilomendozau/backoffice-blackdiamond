@@ -117,17 +117,17 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                     :
                                     <form onSubmit={handleSubmit}>
                                         <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                                            <strong>Welcome!</strong> A referral Code is needed to <strong>complete Account Creation.</strong> Kindly contact the <strong>Admin</strong> for a Referral Code if you don't have one.
+                                            <strong>Bienvenido!</strong> Necesitas un codigo de referido <strong>para completar la Creacion de la Cuenta.</strong> Contacta al <strong>Administrador</strong> para obtener un Codigo de Referido, si no lo tienes.
                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                         </div>
-                                        <label for="referrer_code" className="form-label">Referral Code:</label>
+                                        <label for="referrer_code" className="form-label">Codigo de Referido:</label>
                                         <input
                                             className="form-control inputfield"
                                             type="text"
                                             id="referrer_code"
                                             value={referralCode}
                                             onChange={(e) => setReferralCode(e.target.value)}
-                                            placeholder="Enter 12 digit code"
+                                            placeholder="Ingresa tu codigo de 12 digitos"
                                             required
                                         />
                                         <section className="d-grid mt-2">
@@ -136,7 +136,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                                     ?
                                                     <LoaderIcon />
                                                     :
-                                                    "Check Referral Code"
+                                                    "Verificar Codigo de Referido"
                                                 }
                                             </button>
                                         </section>
@@ -147,17 +147,17 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                             {isValidReferral
                                 ?
                                 <>
-                                    <h4 className="text-center">Create Account</h4>
+                                    <h4 className="text-center">Crear Cuenta</h4>
                                     <div class="alert alert-primary alert-dismissible fade show mt-1 text-center" role="alert">
-                                        <p>Referrer Name: <span className="fw-bold">{referrerInfo.first_name} {referrerInfo.last_name}</span></p>
-                                        <p>Referrer Code: <span className="fw-bold">{referrerInfo.code}</span></p>
+                                        <p>Nombre de Referido: <span className="fw-bold">{referrerInfo.first_name} {referrerInfo.last_name}</span></p>
+                                        <p>Numero de Referido: <span className="fw-bold">{referrerInfo.code}</span></p>
                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
 
                                     <form className="mt-2" onSubmit={onSubmit}>
                                         <input type="hidden" value={referrerInfo.code} />
                                         <div class="col-md-12 mb-3">
-                                            <label for="first_name" className="form-label">First Name</label>
+                                            <label for="first_name" className="form-label">Nombres</label>
                                             <input
                                                 type="text"
                                                 className="form-control inputfield"
@@ -176,7 +176,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                         </div>
 
                                         <div class="col-md-12 mb-3">
-                                            <label for="last_name" class="form-label">Last Name</label>
+                                            <label for="last_name" class="form-label">Apellidos</label>
                                             <input
                                                 type="text"
                                                 class="form-control inputfield"
@@ -195,7 +195,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                         </div>
 
                                         <div class="col-md-12 mb-3">
-                                            <label for="email" class="form-label">Email</label>
+                                            <label for="email" class="form-label">Correo Electronico</label>
                                             <input
                                                 type="email"
                                                 class="form-control inputfield"
@@ -215,7 +215,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                         </div>
 
                                         <div class="col-md-12 mb-3">
-                                            <label for="phone_number" class="form-label">Phone Number</label>
+                                            <label for="phone_number" class="form-label">Numero de Telefono</label>
                                             <input
                                                 type="text"
                                                 class="form-control inputfield"
@@ -251,7 +251,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                         </div>
 
                                         <div class="col-md-12 mb-3">
-                                            <label for="password1" class="form-label">Password</label>
+                                            <label for="password1" class="form-label">Contraseña</label>
                                             <input
                                                 type="password"
                                                 class="form-control inputfield"
@@ -272,7 +272,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                         </div>
 
                                         <div class="col-md-12 mb-2">
-                                            <label for="password2" class="form-label">Confirm Password</label>
+                                            <label for="password2" class="form-label">Confirmar Contraseña</label>
                                             <input
                                                 type="password"
                                                 class="form-control inputfield"
@@ -296,7 +296,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="gridCheck" required />
                                                 <label class="form-check-label " for="gridCheck">
-                                                    <small>By joining, you agree to our <Link to="/terms-and-conditions" className="text-decoration-none text-primary fw-bold">Terms of Service</Link> and <Link to="/privacy-policy" className="text-decoration-none text-primary fw-bold">Privacy Policies</Link></small>
+                                                    <small>Al unirte, tu aceptas nuestros <Link to="/terms-and-conditions" className="text-decoration-none text-primary fw-bold">Terminos de Servicio</Link> y <Link to="/privacy-policy" className="text-decoration-none text-primary fw-bold">Politicas de Privacidad</Link></small>
                                                 </label>
                                             </div>
                                         </div>
@@ -307,7 +307,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                                     ?
                                                     <LoaderIcon />
                                                     :
-                                                    "Create Account"
+                                                    "Crear Cuenta"
                                                 }
                                             </button>
                                         </section>
@@ -317,7 +317,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                 null
                             }
                             <div class="mt-3">
-                                <p class="text-center">Already have an account? <Link to="/login" class="fw-bold text-decoration-none">login</Link></p>
+                                <p class="text-center">Ya tienes una cuenta? <Link to="/login" class="fw-bold text-decoration-none">iniciar sesion</Link></p>
                             </div>
 
                         </div>
@@ -330,18 +330,18 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                     keyboard={false}
                 >
                     <Modal.Header closeButton>
-                        <Modal.Title>Profile Created</Modal.Title>
+                        <Modal.Title>Perfil Creado</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
-                        You have successfully created your Profile. Kindly Check your email to verify your profile
+                        Tu has creado exitosamente tu cuenta. Revisa tu correo electronico para verificar tu cuenta. Si no recibes el correo, revisa tu carpeta de spam o correo no deseado.
                     </Modal.Body>
 
                     <Modal.Footer>
                         <Button variant="btn btn-outline-primary" onClick={handleClose}>
-                            Close
+                            Cerrar
                         </Button>
-                        <Link className="btn btn-primary" to="/login">Login</Link>
+                        <Link className="btn btn-primary" to="/login">Iniciar Sesion</Link>
                     </Modal.Footer>
                 </Modal>
             </section>

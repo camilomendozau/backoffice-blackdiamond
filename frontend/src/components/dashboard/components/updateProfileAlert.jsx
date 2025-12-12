@@ -29,14 +29,14 @@ const UpdateProfileAlert = () => {
                     null
                     :
                     <Alert variant="danger">
-                        Welcome!
+                        Bienvenido!
                         <Link
                             to="/dashboard/edit-profile"
                             className="mx-1 text-decoration-none fw-bold"
                         >
-                            Click here
+                            Click aqui
                         </Link>
-                        to update your Profile
+                        para actualizar tu perfil.
                     </Alert>
             }
         </>
