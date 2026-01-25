@@ -283,32 +283,32 @@ class LevelInformation(models.Model):
     def __str__(self):
         return str(f"Level {self.level} - Plan {self.plan}")
 
-class Prospect(models.Model):
-    user_account = models.ForeignKey(
-        UserAccount,
-        on_delete=models.CASCADE,
-        related_name='prospect'
-    )
-    first_name = models.CharField(max_length=100, null=True)
-    last_name = models.CharField(max_length=100, blank=True, null=True)
-    email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=8, blank=True, null=True)
-    country = models.CharField(max_length=50, blank=True, null=True)
-    user_agent = models.CharField(max_length=100, blank=True, null=True)
-    session_id = models.CharField(max_length=40, blank=True, null=True)
+# class Prospect(models.Model):
+#     user_account = models.ForeignKey(
+#         UserAccount,
+#         on_delete=models.CASCADE,
+#         related_name='prospect'
+#     )
+#     first_name = models.CharField(max_length=100, null=True)
+#     last_name = models.CharField(max_length=100, blank=True, null=True)
+#     email = models.EmailField(unique=True)
+#     phone = models.CharField(max_length=8, blank=True, null=True)
+#     country = models.CharField(max_length=50, blank=True, null=True)
+#     user_agent = models.CharField(max_length=100, blank=True, null=True)
+#     session_id = models.CharField(max_length=40, blank=True, null=True)
 
-    def __str__(self):
-       return f"{self.user_account.email}"
+#     def __str__(self):
+#        return f"{self.user_account.email}"
 
-class ProspectAction(models.Model):
-    prospect = models.ForeignKey(
-        Prospect,
-        on_delete=models.CASCADE,
-        related_name='prospect_action'
-    )
-    action = models.CharField(max_length=255)
-    details = models.TextField(blank=True, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+# class ProspectAction(models.Model):
+#     prospect = models.ForeignKey(
+#         Prospect,
+#         on_delete=models.CASCADE,
+#         related_name='prospect_action'
+#     )
+#     action = models.CharField(max_length=255)
+#     details = models.TextField(blank=True, null=True)
+#     timestamp = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.prospect.email} - {self.action} at {self.timestamp}"
+#     def __str__(self):
+#         return f"{self.prospect.email} - {self.action} at {self.timestamp}"
