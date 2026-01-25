@@ -32,6 +32,7 @@ import CreateAccount from './components/pages/auth/signup';
 import { isAuthenticated } from './components/cards/utilities/privateRoute';
 import Notifications from './components/dashboard/notification';
 import ScrollToTop from './components/dashboard/components/scrollToTop';
+import Campaignes from './components/dashboard/campaignes';
 
 
 export const ServiceContext = createContext(null)
@@ -75,7 +76,7 @@ function App() {
               <BrowserRouter>
                 <ScrollToTop />
                 <Routes>
-                  <Route path="/" element={<Layout />}>
+                  {/* <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="about" element={<About />} />
                     <Route path="services" element={<Services />} />
@@ -85,10 +86,10 @@ function App() {
                     <Route path="privacy-policy" element={<PrivacyPolicy />} />
                     <Route path="terms-and-conditions" element={<TermsAndConditions />} />
                     <Route path="*" element={<NoPage />} />
-                  </Route>
+                  </Route> */}
 
                   <Route>
-                    <Route path='/login' element={<Login />} />
+                    <Route path='/' element={<Login />} />
                     <Route path='/signup' element={<CreateAccount />} />
                     <Route path='/reset-password' element={<ResetPassword />} />
                     <Route path='/password/reset/confirm/:uid/:token' element={<ResetPasswordConfirm />} />
@@ -105,6 +106,7 @@ function App() {
                     <Route path="/dashboard/referrals" element={<Referrals />} />
                     <Route path="/dashboard/help-and-support" element={<Support />} />
                     <Route path="/dashboard/notifications" element={<Notifications />} />
+                    <Route path="/dashboard/campañas" element={<Campaignes />} />
                   </Route >
 
                 </Routes>

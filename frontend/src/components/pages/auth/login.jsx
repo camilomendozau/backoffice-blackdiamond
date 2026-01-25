@@ -7,13 +7,13 @@ import { CompanyInformationContext } from "../../../App";
 import LoaderIcon from "../../cards/utilities/spinner";
 
 const pic = {
-    url: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
+    url: 'https://cdn-3.expansion.mx/dims4/default/a1df99e/2147483647/strip/true/crop/1200x803+0+0/resize/1800x1205!/format/webp/quality/80/?url=https%3A%2F%2Fcdn-3.expansion.mx%2Fa2%2F7a%2F6cdbc7a9465da1fe41f94286ef46%2Fhome-office-istock-1221598194.jpeg'
 }
 
 export const myStyle = {
     backgroundImage: `linear-gradient(0deg, rgba(0, 61, 43, 0.5), rgba(0, 61, 43, 0.5)), url(${pic.url})`,
     height: '100%',
-    backgroundSize: 'cover',
+    backgroundSize: '',
     backgroundRepeat: 'no-repeat',
     display: 'flex',
     justifyContent: 'center',
@@ -112,7 +112,7 @@ function Login({ login, isAuthenticated, error }) {
                                             ?
                                             <LoaderIcon />
                                             :
-                                            "Login"
+                                            "Iniciar Sesion"
                                         }
                                     </button>
                                 </section>

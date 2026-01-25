@@ -98,7 +98,7 @@ function ResetPassword({ reset_password, error, status }) {
                                         }
                                     </button>
                                 </section>
-                                <Link className="d-flex justify-content-center btn btn-outline-primary mt-2" to="/login">Volver a Iniciar Sesion</Link>
+                                <Link className="d-flex justify-content-center btn btn-outline-primary mt-2" to="/">Volver a Iniciar Sesion</Link>
                             </form>
                         </div>
                     </section>

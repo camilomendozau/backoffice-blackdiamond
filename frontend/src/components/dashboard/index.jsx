@@ -32,7 +32,7 @@ function DashboardHome() {
     return (
         <section className="container mt-4">
             <UpdateProfileAlert />
-            <div class="row row-cols-1 row-cols-lg-4 g-4">
+            {/* <div class="row row-cols-1 row-cols-lg-4 g-4">
                 <div class="col">
                     <div class="card">
                         <div class="card-body text-center" >
@@ -65,7 +65,7 @@ function DashboardHome() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
 
             <div class="row g-5 mt-4">
@@ -187,11 +187,11 @@ function DashboardHome() {
                     </div>
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col">
                     <div class="row">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title text-center mb-2">Ultimos Referidos</h5>
+                                <h5 class="card-title text-center mb-2">Actividad</h5>
                                 <section class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead class="table-primary">
@@ -227,7 +227,7 @@ function DashboardHome() {
                         </div>
                     </div>
 
-                    <div class="row mt-3">
+                    {/* <div class="row mt-3">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title text-center mb-2">Ultimas Lineas</h5>
@@ -265,9 +265,9 @@ function DashboardHome() {
                                 </section>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
-                    <div class="row mt-3">
+                    {/* <div class="row mt-3">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title text-center mb-2">Solicitudes de Retiro</h5>
@@ -307,7 +307,7 @@ function DashboardHome() {
                                 </section>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>

@@ -317,7 +317,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                 null
                             }
                             <div class="mt-3">
-                                <p class="text-center">Ya tienes una cuenta? <Link to="/login" class="fw-bold text-decoration-none">iniciar sesion</Link></p>
+                                <p class="text-center">¿Ya tienes una cuenta? <Link to="/" class="fw-bold text-decoration-none">Iniciar sesion</Link></p>
                             </div>
 
                         </div>
@@ -341,7 +341,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                         <Button variant="btn btn-outline-primary" onClick={handleClose}>
                             Cerrar
                         </Button>
-                        <Link className="btn btn-primary" to="/login">Iniciar Sesion</Link>
+                        <Link className="btn btn-primary" to="/">Iniciar Sesion</Link>
                     </Modal.Footer>
                 </Modal>
             </section>

@@ -228,7 +228,7 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                         <UserAccountInfoContext.Provider value={userAccountInfo}>
                             <NotificationContext.Provider value={notification}>
                                 <section>
-                                    {redirect ? <Navigate to='/login' /> : null}
+                                    {redirect ? <Navigate to='/' /> : null}
 
                                     {toggleSideMenu
                                         ?
@@ -246,14 +246,14 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                                                     </NavLink>
                                                 </li>
 
-                                                <li class='nav-link py-1'>
+                                                {/* <li class='nav-link py-1'>
                                                     <NavLink to="/dashboard/Withdrawals" end className='text-decoration-none' aria-current="page">
                                                         <i className="fs-6 fa-solid fa-money-bill-transfer"></i>
                                                         <span className="ms-1 d-sm-inline">Retiros</span>
                                                     </NavLink>
-                                                </li>
+                                                </li> */}
 
-                                                <li className='nav-link py-1'>
+                                                {/* <li className='nav-link py-1'>
                                                     <NavLink to="/dashboard/levels" end className='text-decoration-none' aria-current="page">
                                                         <i className="fs-6 fa-solid fa-list-check"></i>
                                                         <span className="ms-1 d-sm-inline">Niveles</span>
@@ -279,7 +279,7 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                                                         <i className="fs-6 fa-solid fa-users"></i>
                                                         <span className="ms-1 d-sm-inline">Referidos</span>
                                                     </NavLink>
-                                                </li>
+                                                </li> */}
 
                                                 {/* <li class="nav-link py-1">
                                                 <NavLink to="/dashboard/help-and-support" end className='text-decoration-none' aria-current="page">
@@ -289,9 +289,9 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                                             </li> */}
 
                                                 <li class="nav-link py-1">
-                                                    <NavLink to="/dashboard/notifications" end className='text-decoration-none' aria-current="page">
+                                                    <NavLink to="/dashboard/campañas" end className='text-decoration-none' aria-current="page">
                                                         <i className="fs-6 fa-solid fa-bell"></i>
-                                                        <span className="ms-1 d-sm-inline">Notificaciones</span>
+                                                        <span className="ms-1 d-sm-inline">Campañas</span>
                                                     </NavLink>
                                                 </li>
                                             </ul>
