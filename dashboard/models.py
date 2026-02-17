@@ -7,6 +7,7 @@ from django.conf import settings
 from .utils import generate_ref_code, generate_payment_pin
 from django.core.validators import RegexValidator
 from django.utils import timezone
+import uuid
 
 
 class UserAccountManager(BaseUserManager):
@@ -76,7 +77,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     bank_name = models.CharField(max_length=50, blank=True, null=True)
     account_name = models.CharField(max_length=50, blank=True, null=True)
     account_number = models.CharField(max_length=10, blank=True, null=True)
-    code = models.CharField(max_length=12, blank=True)
+    code = models.CharField(max_length=40, blank=True)
     plan = models.CharField(max_length=9, choices=PLAN)
     recommended_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, related_name='ref_by')
@@ -283,32 +284,34 @@ class LevelInformation(models.Model):
     def __str__(self):
         return str(f"Level {self.level} - Plan {self.plan}")
 
-# class Prospect(models.Model):
-#     user_account = models.ForeignKey(
-#         UserAccount,
-#         on_delete=models.CASCADE,
-#         related_name='prospect'
-#     )
-#     first_name = models.CharField(max_length=100, null=True)
-#     last_name = models.CharField(max_length=100, blank=True, null=True)
-#     email = models.EmailField(unique=True)
-#     phone = models.CharField(max_length=8, blank=True, null=True)
-#     country = models.CharField(max_length=50, blank=True, null=True)
-#     user_agent = models.CharField(max_length=100, blank=True, null=True)
-#     session_id = models.CharField(max_length=40, blank=True, null=True)
+class Prospect(models.Model):
+    prospect_id = models.CharField(max_length=40, blank=True, null=True)
+    user_code = models.CharField(max_length=40, null=True, blank=True)
+    first_name = models.CharField(max_length=100, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
+    departamento = models.CharField(max_length=25, blank=True, null=True)
+    email = models.EmailField(null=True, blank=True)
+    phone = models.CharField(max_length=8, blank=True, null=True)
+    country = models.CharField(max_length=50, blank=True, null=True)
+    prospect_agent = models.CharField(max_length=200, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
 
-#     def __str__(self):
-#        return f"{self.user_account.email}"
+    def __str__(self):
+       return f"{self.prospect_id}"
 
-# class ProspectAction(models.Model):
-#     prospect = models.ForeignKey(
-#         Prospect,
-#         on_delete=models.CASCADE,
-#         related_name='prospect_action'
-#     )
-#     action = models.CharField(max_length=255)
-#     details = models.TextField(blank=True, null=True)
-#     timestamp = models.DateTimeField(auto_now_add=True)
+class ProspectAction(models.Model):
+    prospect = models.ForeignKey(
+        Prospect,
+        on_delete=models.CASCADE,
+        related_name='prospect_action'
+    )
+    session_id = models.CharField(max_length=40, blank=True, null=True)
+    event_name = models.CharField(max_length=15)
+    details = models.JSONField(blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    path = models.CharField(max_length=100, blank=True)
 
-#     def __str__(self):
-#         return f"{self.prospect.email} - {self.action} at {self.timestamp}"
+
+    def __str__(self):
+        return f"{self.action} at {self.timestamp}"

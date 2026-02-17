@@ -4,6 +4,7 @@ import { UserInfoContext } from "./navBar";
 import { DownlineListContext, ReferralListContext, WithdrawalListContext, UserAccountInfoContext } from "./navBar";
 import CopyToClipboardButton from "./components/clipCopy";
 import UpdateProfileAlert from "./components/updateProfileAlert";
+import ProspectActions from "./components/prospectAction";
 
 
 function DashboardHome() {
@@ -68,7 +69,7 @@ function DashboardHome() {
             </div> */}
 
 
-            <div class="row g-5 mt-4">
+            {/* <div class="row g-5 mt-4">
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
@@ -185,9 +186,9 @@ function DashboardHome() {
                             </section>
                         </div>
                     </div>
-                </div>
-
-                <div class="col">
+                </div> */}
+                <ProspectActions userCode={userInfo.code}/>
+                {/* <div class="col">
                     <div class="row">
                         <div class="card">
                             <div class="card-body">
@@ -225,7 +226,7 @@ function DashboardHome() {
                                 </section>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* <div class="row mt-3">
                         <div class="card">
@@ -308,8 +309,8 @@ function DashboardHome() {
                             </div>
                         </div>
                     </div> */}
-                </div>
-            </div>
+                
+            {/* </div> */}
         </section>
     );
 }

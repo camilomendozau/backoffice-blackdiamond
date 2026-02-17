@@ -19,6 +19,7 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
 # Aplicaciones instaladas
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,6 +34,7 @@ INSTALLED_APPS = [
     'djoser',
     'ckeditor',
     'frontend',
+    'channels'
 ]
 
 # Middlewares
@@ -115,7 +117,8 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://ffacng.up.railway.app",
-    "http://127.0.0.1:8000"
+    "http://127.0.0.1:8000",
+    "http://localhost:4321"
 ]
 # Django Rest Framework + Djoser + JWT
 REST_FRAMEWORK = {
@@ -148,6 +151,22 @@ DJOSER = {
         'user_create': 'dashboard.serializer.UserCreateSerializer',
         'user_delete': 'djoser.serializers.UserDeleteSerializer',
         'current_user': 'dashboard.serializer.UserInfoSerializer',
+    }
+}
+
+ASGI_APPLICATION = 'backend.asgi.application'
+
+# Channels con Redis
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
     }
 }
 

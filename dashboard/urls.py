@@ -11,4 +11,8 @@ urlpatterns = [
     path('user-account-info', UserAccountInfoView.as_view()),
     path('user-notifications', UserNotificationView.as_view()),
     path('level-information', LevelInformationView.as_view()),
+    path('prospect-actions', ProspectActionView.as_view()),
+    path('prospects/', ProspectListView.as_view(), name='prospect-list'),
+    path('prospect/<uuid:prospect_id>/', ProspectDetailView.as_view(), name='prospect-detail'),
+    path('prospect-check/', ProspectCheckView.as_view(), name='prospect-check'),
 ]

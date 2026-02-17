@@ -110,3 +110,8 @@ class LevelInformationSerializer(serializers.ModelSerializer):
     class Meta:
         model = LevelInformation
         fields = '__all__'
+
+class ProspectActionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProspectAction
+        fields = '__all__'
