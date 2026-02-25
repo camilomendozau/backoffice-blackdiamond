@@ -60,7 +60,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     // Plan Select Input
-    const [selectedPlanOption, setSelectedPlanOption] = useState({ plan: '' });
+    const [selectedPlanOption, setSelectedPlanOption] = useState({ plan: 'Premium' });
     const { plan } = selectedPlanOption
 
     const handlePlanOptionChange = (event) => {
@@ -127,7 +127,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                             id="referrer_code"
                                             value={referralCode}
                                             onChange={(e) => setReferralCode(e.target.value)}
-                                            placeholder="Ingresa tu codigo de 12 digitos"
+                                            placeholder="Ingresa tu codigo de 32 digitos"
                                             required
                                         />
                                         <section className="d-grid mt-2">
@@ -234,7 +234,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                                 null}
                                         </div>
 
-                                        <div className="col-md-12 mb-3">
+                                        {/* <div className="col-md-12 mb-3">
                                             <label for="plan" className="form-label">Plan</label>
                                             <select
                                                 id="plan"
@@ -248,7 +248,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                                                 <option value="Eureka">Eureka - N15,500</option>
                                                 <option value="Premium">Premium - N15,000</option>
                                             </select>
-                                        </div>
+                                        </div> */}
 
                                         <div class="col-md-12 mb-3">
                                             <label for="password1" class="form-label">Contraseña</label>

@@ -60,7 +60,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     phone_number = models.CharField(null=True, blank=True, max_length=11, validators=[
-                                    RegexValidator(r'^\d{11}$', 'Enter a valid phone number.')])
+                                    RegexValidator(r'^\d{8}$', 'Enter a valid phone number.')])
     date_of_birth = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -81,7 +81,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     plan = models.CharField(max_length=9, choices=PLAN)
     recommended_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, related_name='ref_by')
-    refferer_code_used = models.CharField(max_length=12, blank=True)
+    refferer_code_used = models.CharField(max_length=40, blank=True)
 
     objects = UserAccountManager()
 
@@ -110,24 +110,22 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
             return "https://cdn-icons-png.flaticon.com/512/147/147142.png"
 
     def save(self, *args, **kwargs):
-        if self.status == "Active" and self.code == "":
-            code = generate_ref_code()
+        # Generar código cuando el usuario es activado (aprobado)
+        if self.is_active and self.code == "":
+            code = generate_ref_code() # Usar UUID en lugar de generate_ref_code()
             self.code = code
 
-        # if self.refferer_code_used:
-        #     current_reffer = UserAccount.objects.get(
-        #         code=self.refferer_code_used)
-        #     self.recommended_by = current_reffer
-
         if self.refferer_code_used:
-            current_reffer = UserAccount.objects.get(
-                code=self.refferer_code_used)
-            if self.pk is None and UserAccount.objects.filter(is_superuser=True).count() == 0:
-                self.recommended_by = ''
-            else:
-                self.recommended_by = current_reffer
+            try:
+                current_reffer = UserAccount.objects.get(code=self.refferer_code_used)
+                if self.pk is None and UserAccount.objects.filter(is_superuser=True).count() == 0:
+                    self.recommended_by = None
+                else:
+                    self.recommended_by = current_reffer
+            except UserAccount.DoesNotExist:
+                pass  # Manejar código inválido
 
-        if not self.id:  # Only set the date_joined if the user is being created
+        if not self.id:
             self.date_joined = timezone.now()
 
         super().save(*args, **kwargs)

@@ -28,6 +28,7 @@ import Downlines from './components/dashboard/downlines';
 import Payments from './components/dashboard/payments';
 import Referrals from './components/dashboard/referrals';
 import Support from './components/dashboard/support';
+import UserManagement from './components/dashboard/usermanagement';
 import CreateAccount from './components/pages/auth/signup';
 import { isAuthenticated } from './components/cards/utilities/privateRoute';
 import Notifications from './components/dashboard/notification';
@@ -107,6 +108,7 @@ function App() {
                     <Route path="/dashboard/help-and-support" element={<Support />} />
                     <Route path="/dashboard/notifications" element={<Notifications />} />
                     <Route path="/dashboard/campañas" element={<Campaignes />} />
+                    <Route path="/dashboard/user-management" element={<UserManagement/>} />
                   </Route >
 
                 </Routes>

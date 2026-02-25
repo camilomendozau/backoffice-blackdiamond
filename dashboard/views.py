@@ -20,6 +20,7 @@ from django.core.cache import cache
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from django.utils import timezone
+from rest_framework.permissions import BasePermission
 
 
 def process_mlm_system():
@@ -81,19 +82,40 @@ class DownlineView(APIView):
     permission_classes = [IsAuthenticated,]
 
     def get(self, request):
+        mlm_system = process_mlm_system()
+        
+        # ✅ Validar que mlm_system no sea None
+        if mlm_system is None:
+            return Response(
+                {'detail': 'MLM system not initialized. Contact administrator.'},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
+        
         if self.request.user.plan == "Premium":
-            current_user_downline = process_mlm_system().get_downline_by_depth(
+            current_user_downline = mlm_system.get_downline_by_depth(
                 request.user.email, 8)
         elif self.request.user.plan == "Eureka":
-            current_user_downline = process_mlm_system().get_downline_by_depth(
+            current_user_downline = mlm_system.get_downline_by_depth(
                 request.user.email, 6)
+        else:
+            return Response(
+                {'detail': 'No plan assigned'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # ✅ Validar que current_user_downline no sea None
+        if current_user_downline is None:
+            return Response({'users': []})
 
         downline_user_list = []
         for user in current_user_downline[1:]:
-            find_user = UserAccount.objects.get(email=user)
-            downline_user_list.append(find_user)
-        queryset = downline_user_list
-        serializer = MlmSystemUserSerializer(queryset, many=True)
+            try:
+                find_user = UserAccount.objects.get(email=user)
+                downline_user_list.append(find_user)
+            except UserAccount.DoesNotExist:
+                continue
+        
+        serializer = MlmSystemUserSerializer(downline_user_list, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -101,21 +123,42 @@ class RefferalView(APIView):
     permission_classes = [IsAuthenticated,]
 
     def get(self, request):
+        mlm_system = process_mlm_system()
+        
+        # ✅ Validar que mlm_system no sea None
+        if mlm_system is None:
+            return Response(
+                {'detail': 'MLM system not initialized. Contact administrator.'},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
+        
         if self.request.user.plan == "Premium":
-            current_user_referrals = process_mlm_system().get_downline_by_depth(
+            current_user_referrals = mlm_system.get_downline_by_depth(
                 request.user.email, 8)
         elif self.request.user.plan == "Eureka":
-            current_user_referrals = process_mlm_system().get_downline_by_depth(
+            current_user_referrals = mlm_system.get_downline_by_depth(
                 request.user.email, 6)
+        else:
+            return Response(
+                {'detail': 'No plan assigned'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # ✅ Validar que current_user_referrals no sea None
+        if current_user_referrals is None:
+            return Response({'users': []})
 
         referal_user_list = []
         for user in current_user_referrals[1:]:
-            find_user = UserAccount.objects.get(email=user)
-            user_ref_code = find_user.refferer_code_used
-            if user_ref_code == self.request.user.code:
-                referal_user_list.append(find_user)
-        queryset = referal_user_list
-        serializer = MlmSystemUserSerializer(queryset, many=True)
+            try:
+                find_user = UserAccount.objects.get(email=user)
+                user_ref_code = find_user.refferer_code_used
+                if user_ref_code == self.request.user.code:
+                    referal_user_list.append(find_user)
+            except UserAccount.DoesNotExist:
+                continue
+        
+        serializer = MlmSystemUserSerializer(referal_user_list, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -184,49 +227,6 @@ class LevelInformationView(APIView):
         level_information = LevelInformation.objects.all()
         serializer = LevelInformationSerializer(level_information, many=True)
         return Response(serializer.data)
-
-
-# ==================== SERIALIZERS INLINE ====================
-
-def serialize_prospect_simple(prospect):
-    """
-    Serializa prospecto basado en el modelo Prospect
-    
-    Campos:
-    - country: País (ej: "Bolivia")
-    - departamento: Departamento de Bolivia (ej: "La Paz")
-    - prospect_agent: User agent del navegador
-    - NO incluye 'ip' (eliminado del modelo)
-    """
-    return {
-        'id': str(prospect.id),
-        'prospect_id': str(prospect.prospect_id) if prospect.prospect_id else None,
-        'user_code': prospect.user_code,
-        'first_name': prospect.first_name or '',
-        'last_name': prospect.last_name or '',
-        'email': prospect.email or '',
-        'phone': prospect.phone or '',
-        'country': prospect.country or '',  # ← País (Bolivia)
-        'departamento': prospect.departamento or '',  # ← Departamento boliviano
-        'prospect_agent': prospect.prospect_agent or '',  # ← User agent completo
-        'created_at': prospect.created_at.isoformat() if prospect.created_at else None,
-    }
-
-
-def serialize_action_simple(action):
-    """
-    Serializa acción basado en el modelo ProspectAction
-    NO incluye 'ip' (eliminado del modelo)
-    """
-    return {
-        'id': action.id,
-        'event_name': action.event_name,
-        'details': action.details or {},
-        'timestamp': action.timestamp.isoformat() if action.timestamp else None,
-        'path': action.path or '',
-        'session_id': action.session_id or '',
-        # ip eliminado del modelo
-    }
 
 
 # ==================== VISTAS DE PROSPECT ====================
@@ -551,6 +551,209 @@ class ProspectCheckView(APIView):
                 'has_complete_data': False,
                 'prospect': None
             })
+
+class IsSuperUser(BasePermission):
+    """Permiso: solo superusuarios autenticados"""
+    def has_permission(self, request, view):
+        return (request.user and 
+                request.user.is_authenticated and 
+                request.user.is_superuser)
+
+class PendingUsersListView(APIView):
+    """
+    GET /api/admin/pending-users/
+    Lista usuarios pendientes de aprobación (solo superusuarios)
+    """
+    permission_classes = [IsSuperUser]
+
+    def get(self, request):
+        pending_users = UserAccount.objects.filter(
+            is_active=False,
+            is_superuser=False
+        ).order_by('-date_joined')
+        
+        users_data = []
+        for user in pending_users:
+            # Obtener info del referidor
+            referrer_info = None
+            if user.refferer_code_used:
+                try:
+                    referrer = UserAccount.objects.get(code=user.refferer_code_used)
+                    referrer_info = f"{referrer.first_name} {referrer.last_name} ({referrer.email})"
+                except UserAccount.DoesNotExist:
+                    referrer_info = "Código inválido"
+            
+            users_data.append({
+                'id': user.id,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email,
+                'phone_number': user.phone_number or '',
+                'code': user.code if user.code else None,
+                'refferer_code_used': user.refferer_code_used or '',
+                'referrer_info': referrer_info,
+                'plan': user.plan or '',
+                'date_joined': user.date_joined.isoformat(),
+            })
+        
+        return Response({
+            'count': len(users_data),
+            'users': users_data
+        })
+
+class ApproveUserView(APIView):
+    permission_classes = [IsSuperUser]
+
+    def post(self, request, user_code):
+        try:
+            user = UserAccount.objects.get(code=user_code, is_superuser=False)
+            
+            if user.is_active:
+                return Response(
+                    {'detail': 'Este usuario ya está activo'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            with transaction.atomic():
+                # 1. Activar usuario
+                user.is_active = True
+                user.save()
+                
+                # 2. Crear ActiveUser - CORRECCIÓN AQUÍ ✅
+                ActiveUser.objects.get_or_create(
+                    user=user  # ← Cambiar de 'email' a 'user'
+                    # No necesitas 'defaults' porque el save() del modelo lo maneja
+                )
+                
+                # 3. Crear balance inicial
+                UserAccountBalance.objects.get_or_create(
+                    user=user,
+                    defaults={
+                        'total_balance': 0,
+                        'match_bonus_earned': 0,
+                        'referral_bonus_earned': 0
+                    }
+                )
+                
+                # 4. Crear notificación (sin notification_type si no existe el campo)
+                UserNotification.objects.create(
+                    user=user,
+                    subject='¡Cuenta Aprobada!',  # ← Usar 'subject' en lugar de 'title'
+                    message=f'Tu cuenta ha sido aprobada. Código de referencia: {user.code}',
+                    is_read=False
+                )
+            
+            # 5. Enviar email
+            self._send_approval_email(user)
+            
+            return Response({
+                'detail': 'Usuario aprobado exitosamente',
+                'user': {
+                    'id': user.id,
+                    'code': user.code,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name,
+                    'email': user.email,
+                    'is_active': user.is_active
+                }
+            })
+            
+        except UserAccount.DoesNotExist:
+            return Response(
+                {'detail': 'Usuario no encontrado'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            return Response(
+                {'detail': f'Error al aprobar: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+    
+    def _send_approval_email(self, user):
+        try:
+            frontend_url = getattr(settings, 'FRONTEND_URL', 'http://localhost:3000')
+            send_mail(
+                subject='✅ Tu cuenta ha sido aprobada',
+                message=f'''Hola {user.first_name},
+
+¡Excelente noticia! Tu cuenta ha sido aprobada.
+
+Inicia sesión: {frontend_url}
+Tu código de referencia: {user.code}
+
+Comparte este código para invitar a más personas.
+
+¡Bienvenido!''',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+                fail_silently=True,
+            )
+        except Exception as e:
+            print(f"❌ Error enviando email de aprobación: {e}")
+
+
+
+class RejectUserView(APIView):
+    """
+    POST /api/admin/reject-user/<user_id>/
+    Rechaza y elimina usuario pendiente
+    """
+    permission_classes = [IsSuperUser]
+
+    def post(self, request, user_code):
+        try:
+            user = UserAccount.objects.get(
+                code=user_code,
+                is_superuser=False,
+                is_active=False
+            )
+            
+            user_email = user.email
+            user_name = f"{user.first_name} {user.last_name}"
+            
+            # Enviar email antes de eliminar
+            #self._send_rejection_email(user)
+            
+            # Eliminar usuario
+            user.delete()
+            
+            return Response({
+                'detail': f'Usuario {user_name} ({user_email}) rechazado y eliminado'
+            })
+            
+        except UserAccount.DoesNotExist:
+            return Response(
+                {'detail': 'Usuario no encontrado o ya procesado'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            return Response(
+                {'detail': f'Error al rechazar: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+    
+#     def _send_rejection_email(self, user):
+#         """Envía email de rechazo al usuario"""
+#         try:
+#             send_mail(
+#                 subject='❌ Solicitud de cuenta no aprobada',
+#                 message=f'''Hola {user.first_name},
+
+# Lamentamos informarte que tu solicitud no fue aprobada.
+
+# Si tienes preguntas, contacta al administrador.
+
+# Atentamente,
+# El equipo administrativo''',
+#                 from_email=settings.DEFAULT_FROM_EMAIL,
+#                 recipient_list=[user.email],
+#                 fail_silently=True,
+#             )
+#         except Exception as e:
+#             print(f"❌ Error enviando email de rechazo: {e}")
+
 
 # ==================== MLM SYSTEM FUNCTIONS ====================
 
