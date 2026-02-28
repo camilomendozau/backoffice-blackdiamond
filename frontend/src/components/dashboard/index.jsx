@@ -8,24 +8,24 @@ import ProspectActions from "./components/prospectAction";
 
 
 function DashboardHome() {
-    const downlineList = useContext(DownlineListContext)
-    const referralList = useContext(ReferralListContext)
-    const withdrawalList = useContext(WithdrawalListContext)
+    // const downlineList = useContext(DownlineListContext)
+    // const referralList = useContext(ReferralListContext)
+    // const withdrawalList = useContext(WithdrawalListContext)
     const userAccountInfo = useContext(UserAccountInfoContext)
 
 
     // Downline List
-    const reversedList = downlineList.reverse();
-    const lastFourDownlines = reversedList.slice(0, 4);
-    const totalDownline = Object.keys(downlineList).length
+    // const reversedList = downlineList.reverse();
+    // const lastFourDownlines = reversedList.slice(0, 4);
+    // const totalDownline = Object.keys(downlineList).length
 
-    //Referral List
-    const reversedReferralList = referralList.reverse();
-    const lastFourReferrals = reversedReferralList.slice(0, 4);
+    // //Referral List
+    // const reversedReferralList = referralList.reverse();
+    // const lastFourReferrals = reversedReferralList.slice(0, 4);
 
-    //Withdrawal List
-    const reversedWithdrawalList = withdrawalList.reverse();
-    const lastFourWithdrawals = reversedWithdrawalList.slice(0, 4)
+    // //Withdrawal List
+    // const reversedWithdrawalList = withdrawalList.reverse();
+    // const lastFourWithdrawals = reversedWithdrawalList.slice(0, 4)
 
     //User Info
     const userInfo = useContext(UserInfoContext)
@@ -33,7 +33,7 @@ function DashboardHome() {
     return (
         <section className="container mt-4">
             <UpdateProfileAlert />
-            {/* <div class="row row-cols-1 row-cols-lg-4 g-4">
+            <div class="row row-cols-1 row-cols-lg-4 g-4">
                 <div class="col">
                     <div class="card">
                         <div class="card-body text-center" >
@@ -42,14 +42,19 @@ function DashboardHome() {
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <p class="card-text">Total de lineas</p>
-                            <h5 class="card-title">{totalDownline}</h5>
+                {userInfo.is_superuser &&
+                    (<div class="col">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Enlace de invitacion a Crear Cuenta</h5>
+                                <p class="card-text">{"127.0.0.1:8000/signup/?refCode="+userInfo.code}</p>
+                                <span className="ms-3">
+                                    <CopyToClipboardButton text={"127.0.0.1:8000/signup/?refCode="+userInfo.code} />
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </div>)
+                }
                 <div class="col">
                     <div class="card">
                         <div class="card-body text-center">
@@ -66,11 +71,11 @@ function DashboardHome() {
                         </div>
                     </div>
                 </div>
-            </div> */}
+            </div>
 
 
-            {/* <div class="row g-5 mt-4">
-                <div class="col-lg-6">
+            {/* <div class="row g-5 mt-4"> */}
+                {/* <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
                             <section class="text-center">

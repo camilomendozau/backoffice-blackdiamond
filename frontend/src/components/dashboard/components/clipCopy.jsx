@@ -18,7 +18,7 @@ const CopyToClipboardButton = ({ text }) => {
 
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" style={{ backgroundColor: 'blue' }} {...props} >
-            {isCopied ? 'Copied!!!' : 'Copy'}
+            {isCopied ? 'Copiado!!!' : 'Copiar'}
         </Tooltip>
     );
 

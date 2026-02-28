@@ -2,15 +2,20 @@ from rest_framework import serializers
 from .models import *
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+from django.conf import settings
+from django.db import transaction
+
 
 user = get_user_model()
 
 
 class UserCreateSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
+        #print("Init UserCreateSerializer")
         model = user
-        fields = ('id', 'first_name',
-                  'last_name', 'email', 'refferer_code_used', 'password')
+        fields = ('id', 'first_name', 'last_name', 'phone_number', 'email', 
+                  'refferer_code_used', 'plan', 'password')
 
 
 class UserInfoSerializer(UserSerializer):
@@ -18,7 +23,7 @@ class UserInfoSerializer(UserSerializer):
 
     class Meta(UserSerializer.Meta):
         model = user
-        fields = ('id', 'first_name', 'last_name', 'phone_number', 'email', 'get_photo_url',
+        fields = ('id', 'first_name', 'last_name', 'phone_number', 'email', 'is_superuser' ,'get_photo_url',
                   'date_of_birth', 'gender', 'home_address', 'status', 'local_govt', 'state_of_origin',
                   'nationality', 'image', 'code', 'plan', 'bank_name', 'account_name', 'account_number', 'date_joined',
                   'local_govt', 'state_of_origin', 'recommended_by', 'recommended_by_email')
@@ -38,6 +43,8 @@ class UserInfoSerializer(UserSerializer):
             'last_name', instance.last_name)
         instance.phone_number = validated_data.get(
             'phone_number', instance.phone_number)
+        instance.is_superuser = validated_data.get(
+            'is_superuser', instance.is_superuser)
         instance.date_of_birth = validated_data.get(
             'date_of_birth', instance.date_of_birth)
         instance.gender = validated_data.get('gender', instance.gender)
@@ -115,3 +122,44 @@ class ProspectActionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProspectAction
         fields = '__all__'
+
+
+def serialize_prospect_simple(prospect):
+    """
+    Serializa prospecto basado en el modelo Prospect
+    
+    Campos:
+    - country: País (ej: "Bolivia")
+    - departamento: Departamento de Bolivia (ej: "La Paz")
+    - prospect_agent: User agent del navegador
+    - NO incluye 'ip' (eliminado del modelo)
+    """
+    return {
+        'id': str(prospect.id),
+        'prospect_id': str(prospect.prospect_id) if prospect.prospect_id else None,
+        'user_code': prospect.user_code,
+        'first_name': prospect.first_name or '',
+        'last_name': prospect.last_name or '',
+        'email': prospect.email or '',
+        'phone': prospect.phone or '',
+        'country': prospect.country or '',  # ← País (Bolivia)
+        'departamento': prospect.departamento or '',  # ← Departamento boliviano
+        'prospect_agent': prospect.prospect_agent or '',  # ← User agent completo
+        'created_at': prospect.created_at.isoformat() if prospect.created_at else None,
+    }
+
+
+def serialize_action_simple(action):
+    """
+    Serializa acción basado en el modelo ProspectAction
+    NO incluye 'ip' (eliminado del modelo)
+    """
+    return {
+        'id': action.id,
+        'event_name': action.event_name,
+        'details': action.details or {},
+        'timestamp': action.timestamp.isoformat() if action.timestamp else None,
+        'path': action.path or '',
+        'session_id': action.session_id or '',
+        # ip eliminado del modelo
+    }

@@ -118,10 +118,10 @@ function Login({ login, isAuthenticated, error }) {
                                 </section>
 
 
-                                <div class="mt-3">
+                                {/* <div class="mt-3">
                                     <p class="text-center">No tienes una cuenta? <Link to="/signup" class="fw-bold text-decoration-none">Crear
                                         Cuenta</Link></p>
-                                </div>
+                                </div> */}
                             </form>
                         </section>
                     </section>

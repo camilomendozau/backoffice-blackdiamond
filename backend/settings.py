@@ -138,7 +138,7 @@ DJOSER = {
     'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    'SEND_CONFIRMATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL': False,
     'SET_USERNAME_RETYPE': True,
     'SET_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
@@ -148,8 +148,8 @@ DJOSER = {
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
     'SERIALIZERS': {
         'user': 'djoser.serializers.UserSerializer',
-        'user_create': 'dashboard.serializer.UserCreateSerializer',
-        'user_delete': 'djoser.serializers.UserDeleteSerializer',
+        #'user_create': 'dashboard.serializer.UserCreateSerializer',
+        # 'user_delete': 'djoser.serializer.UserDeleteSerializer',
         'current_user': 'dashboard.serializer.UserInfoSerializer',
     }
 }

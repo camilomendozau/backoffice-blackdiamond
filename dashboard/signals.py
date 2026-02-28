@@ -3,20 +3,36 @@ from django.dispatch import receiver
 from dashboard.models import *
 from dashboard.views import initialized_match_and_referral_bonus_payment
 from django.db import transaction
-
+from django.core.mail import send_mail
 
 @receiver(post_save, sender=UserAccount)
 def create_user_account_info(sender, instance, created, **kwargs):
+    """
+    Crea el balance y payment SOLO cuando el usuario es aprobado (is_active=True)
+    """
+    # No ejecutar si es un usuario nuevo (lo maneja handle_new_user_registration)
     if created:
-        UserAccountBalance.objects.create(user=instance)
-
-        if instance.plan == "Premium":
-            Payment.objects.create(user=instance, amount='15000')
-        elif instance.plan == "Eureka":
-            Payment.objects.create(user=instance, amount='15500')
-
-        initialized_match_and_referral_bonus_payment()
-
+        return
+    
+    # Solo ejecutar cuando el usuario se activa (aprobación)
+    if not instance.is_active:
+        return
+    
+    # Verificar que no tenga ya un balance creado
+    if UserAccountBalance.objects.filter(user=instance).exists():
+        return
+       
+    # Crear balance
+    UserAccountBalance.objects.create(user=instance)
+    
+    # Crear payment según plan
+    if instance.plan == "Premium":
+        Payment.objects.create(user=instance, amount='15000')
+    elif instance.plan == "Eureka":
+        Payment.objects.create(user=instance, amount='15500')
+    
+    # Inicializar sistema MLM
+    initialized_match_and_referral_bonus_payment()
 
 # Update Match Bonus
 @receiver(post_save, sender=MatchBonus)
@@ -66,8 +82,8 @@ def update_user_status(sender, instance, created, **kwargs):
 def update_referral_bonus(sender, instance, created, **kwargs):
     if created:
         user_account_info = UserAccountBalance.objects.get(user=instance.user)
-        subject = 'Referral Bonus'
-        message = f'You have received N{instance.credited_amount} for referring {instance.referred_user_full_name}'
+        subject = 'Bono de Referencia - Black Diamond'
+        message = f'Tu has recibido N{instance.credited_amount} por el usuario con codigo: {instance.referred_user_full_name}'
         UserNotification.objects.create(
             user=instance.user, subject=subject, message=message)
 
@@ -107,3 +123,113 @@ def approve_withdrawal(sender, instance, created, **kwargs):
         except UserAccountBalance.DoesNotExist:
             # Handle the case where the UserAccountBalance doesn't exist for the user
             pass
+
+@receiver(post_save, sender=UserAccount)
+def handle_new_user_registration(sender, instance, created, **kwargs):
+    """
+    Signal que se ejecuta cuando se crea un nuevo usuario
+    Lo marca como INACTIVO y notifica al superusuario
+    """
+    # Solo para usuarios NUEVOS (no actualizaciones)
+    if not created:
+        return
+    
+    # No procesar superusuarios
+    if instance.is_superuser:
+        return
+   
+    # Forzar usuario como INACTIVO (requiere aprobación)
+    needs_update = False
+    
+    if instance.is_active:
+        instance.is_active = False
+        needs_update = True
+    
+    if instance.status != 'Inactive':
+        instance.status = 'Inactive'
+        needs_update = True
+    
+    # Generar código UUID si no tiene
+    if not instance.code:
+        instance.code = generate_ref_code()
+        needs_update = True
+    
+    # Guardar cambios sin disparar el signal de nuevo
+    if needs_update:
+        UserAccount.objects.filter(pk=instance.pk).update(
+            is_active=False,
+            status='Inactive',
+            code=instance.code
+        )
+   
+    # Notificar al superusuario
+    notify_superuser_about_new_user(instance)
+
+
+def notify_superuser_about_new_user(user):
+    """
+    Envía email y notificación al superusuario sobre nuevo usuario pendiente
+    """
+    
+    try:
+        # Obtener superusuario
+        super_user = UserAccount.objects.filter(is_superuser=True).first()
+        
+        if not super_user:
+            return
+        
+        # Obtener info del referidor
+        referrer_info = "Sin referidor"
+        if user.refferer_code_used:
+            try:
+                referrer = UserAccount.objects.get(code=user.refferer_code_used)
+                referrer_info = f"{referrer.first_name} {referrer.last_name} ({referrer.email})"
+            except UserAccount.DoesNotExist:
+                referrer_info = f"Código inválido: {user.refferer_code_used}"
+        
+        # URL del panel de administración
+        admin_url = getattr(settings, 'FRONTEND_URL', 'http://localhost:3000')
+        
+        # Enviar email al superusuario
+        send_mail(
+            subject='🔔 Nuevo usuario Black Diamond pendiente de aprobación',
+            message=f'''Hola Administrador de Black Diamond,
+
+            Un nuevo usuario se ha registrado y está pendiente de aprobación:
+
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            📋 INFORMACIÓN DEL USUARIO
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+            Nombre: {user.first_name} {user.last_name}
+            Email: {user.email}
+            Teléfono: {user.phone_number or 'No proporcionado'}
+            Plan: {user.plan}
+            Referido por: {referrer_info}
+            Código: {user.code}
+            Fecha: {user.date_joined.strftime('%d/%m/%Y %H:%M')}
+
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+            Por favor, revisa y aprueba esta solicitud en:
+            {admin_url}
+
+            Saludos,
+            Sistema Automático''',
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[super_user.email],
+            fail_silently=True,
+        )
+       
+        # Crear notificación en el sistema
+        UserNotification.objects.create(
+            user=super_user,
+            subject='Nuevo usuario pendiente',
+            message=f'{user.first_name} {user.last_name} ({user.email}) se registró con el plan {user.plan}. Requiere aprobación.',
+            is_read=False
+        )
+
+    except Exception as e:
+        print(f"❌ Error enviando notificación: {e}")
+        import traceback
+        traceback.print_exc()
