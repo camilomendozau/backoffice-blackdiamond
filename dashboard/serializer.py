@@ -4,15 +4,18 @@ from djoser.serializers import UserCreateSerializer, UserSerializer
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.conf import settings
+from django.db import transaction
+
 
 user = get_user_model()
 
 
-# class UserCreateSerializer(UserCreateSerializer):
-#     class Meta(UserCreateSerializer.Meta):
-#         model = user
-#         fields = ('id', 'first_name', 'last_name', 'phone_number', 'email', 
-#                   'refferer_code_used', 'plan', 'password')
+class UserCreateSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
+        #print("Init UserCreateSerializer")
+        model = user
+        fields = ('id', 'first_name', 'last_name', 'phone_number', 'email', 
+                  'refferer_code_used', 'plan', 'password')
 
 
 class UserInfoSerializer(UserSerializer):
@@ -119,84 +122,6 @@ class ProspectActionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProspectAction
         fields = '__all__'
-
-class UserCreateSerializer(UserCreateSerializer):
-    class Meta(UserCreateSerializer.Meta):
-        model = user
-        fields = ('id', 'first_name', 'last_name', 'phone_number', 'email', 
-                  'refferer_code_used', 'plan', 'password', 're_password')
-    
-    def create(self, validated_data):
-        # Remover re_password antes de crear
-        validated_data.pop('re_password', None)
-        
-        # Crear usuario INACTIVO por defecto
-        user = super().create(validated_data)
-        user.is_active = False  # ← Usuario pendiente de aprobación
-        user.status = 'Inactive'
-        user.save()
-        
-        # Notificar al superusuario por email
-        self._notify_superuser(user)
-        
-        return user
-    
-    def _notify_superuser(self, user):
-        """Envía email al superusuario sobre nuevo registro"""
-        try:
-            # Obtener superusuario
-            super_user = UserAccount.objects.filter(is_superuser=True).first()
-            
-            if not super_user:
-                print("⚠️ No hay superusuario en el sistema")
-                return
-            
-            # Obtener info del referidor
-            referrer_info = "Sin referidor"
-            if user.refferer_code_used:
-                try:
-                    referrer = UserAccount.objects.get(code=user.refferer_code_used)
-                    referrer_info = f"{referrer.first_name} {referrer.last_name} ({referrer.email})"
-                except UserAccount.DoesNotExist:
-                    referrer_info = "Código inválido"
-            
-            # URL del panel de administración
-            admin_url = getattr(settings, 'FRONTEND_URL', 'http://localhost:3000')
-            
-            # Enviar email
-            send_mail(
-                subject='🔔 Nuevo usuario pendiente de aprobación',
-                message=f'''Hola Administrador,
-
-Un nuevo usuario se ha registrado y está pendiente de aprobación:
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 INFORMACIÓN DEL USUARIO
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Nombre: {user.first_name} {user.last_name}
-Email: {user.email}
-Teléfono: {user.phone_number or 'No proporcionado'}
-Plan: {user.plan}
-Referido por: {referrer_info}
-Fecha de registro: {user.date_joined.strftime('%d/%m/%Y %H:%M')}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Por favor, revisa y aprueba esta solicitud en:
-{admin_url}/admin/usuarios-pendientes
-
-Saludos,
-Sistema Automático''',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[super_user.email],
-                fail_silently=True,
-            )
-            
-            print(f"✅ Email de notificación enviado a {super_user.email}")
-            
-        except Exception as e:
-            print(f"❌ Error enviando notificación al superusuario: {e}")
 
 
 def serialize_prospect_simple(prospect):

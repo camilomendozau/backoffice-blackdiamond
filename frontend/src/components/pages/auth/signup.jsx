@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { createaccount } from "../../../actions/auth";
 import Button from 'react-bootstrap/Button';
@@ -24,6 +24,16 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
         code: ''
     });
 
+    const location = useLocation();
+    
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const refCode = params.get('refCode');
+        if (refCode) {
+            setReferralCode(refCode);
+        }
+    }, [location]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true)
@@ -38,7 +48,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
         if (data.code) {
             setIsValidReferral(true);
         } else {
-            alert("Invalid referral code. Please try again.");
+            alert("Codigo de Referido invalido. Por favor intenta de nuevo.");
         }
     };
 
@@ -73,7 +83,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
 
         async function signupHandler() {
             try {
-                await createaccount(first_name, last_name, phone_number, email, referralCode, plan, password, re_password);
+                await createaccount(first_name, last_name, phone_number, email, referralCode, plan ,password, re_password);
                 // handle successful signup
             } catch (error) {
                 // handle signup error
@@ -334,7 +344,7 @@ const CreateAccount = ({ createaccount, isAuthenticated, error, status }) => {
                     </Modal.Header>
 
                     <Modal.Body>
-                        Tu has creado exitosamente tu cuenta. Revisa tu correo electronico para verificar tu cuenta. Si no recibes el correo, revisa tu carpeta de spam o correo no deseado.
+                        Se ha solicitado la creacion de tu cuenta. Contacta al administrador para aprobar tu cuenta y activar tu perfil. Una vez que tu cuenta sea aprobada, recibirás una notificación por correo electronico.
                     </Modal.Body>
 
                     <Modal.Footer>

@@ -617,12 +617,12 @@ class ApproveUserView(APIView):
             with transaction.atomic():
                 # 1. Activar usuario
                 user.is_active = True
+                user.status = 'Active'
                 user.save()
                 
                 # 2. Crear ActiveUser - CORRECCIÓN AQUÍ ✅
                 ActiveUser.objects.get_or_create(
-                    user=user  # ← Cambiar de 'email' a 'user'
-                    # No necesitas 'defaults' porque el save() del modelo lo maneja
+                    user=user 
                 )
                 
                 # 3. Crear balance inicial
@@ -675,17 +675,15 @@ class ApproveUserView(APIView):
         try:
             frontend_url = getattr(settings, 'FRONTEND_URL', 'http://localhost:3000')
             send_mail(
-                subject='✅ Tu cuenta ha sido aprobada',
-                message=f'''Hola {user.first_name},
+                subject='✅ Tu cuenta Black Diamond ha sido aprobada',
+                message=f'''Hola {user.first_name} {user.last_name},
 
-¡Excelente noticia! Tu cuenta ha sido aprobada.
+                ¡Excelente noticia! Tu cuenta ha sido aprobada.
 
-Inicia sesión: {frontend_url}
-Tu código de referencia: {user.code}
+                Inicia sesión en: {frontend_url}
+                Tu código de referencia es: {user.code}
 
-Comparte este código para invitar a más personas.
-
-¡Bienvenido!''',
+                ¡Bienvenido al equipo de Black Diamond!''',
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[user.email],
                 fail_silently=True,
@@ -714,7 +712,7 @@ class RejectUserView(APIView):
             user_name = f"{user.first_name} {user.last_name}"
             
             # Enviar email antes de eliminar
-            #self._send_rejection_email(user)
+            self._send_rejection_email(user)
             
             # Eliminar usuario
             user.delete()
@@ -734,25 +732,25 @@ class RejectUserView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
     
-#     def _send_rejection_email(self, user):
-#         """Envía email de rechazo al usuario"""
-#         try:
-#             send_mail(
-#                 subject='❌ Solicitud de cuenta no aprobada',
-#                 message=f'''Hola {user.first_name},
+    def _send_rejection_email(self, user):
+        """Envía email de rechazo al usuario"""
+        try:
+            send_mail(
+                subject='❌ Solicitud de cuenta Black Diamond no aprobada',
+                message=f'''Hola {user.first_name} {user.last_name},
 
-# Lamentamos informarte que tu solicitud no fue aprobada.
+                Lamentamos informarte que tu solicitud no fue aprobada.
 
-# Si tienes preguntas, contacta al administrador.
+                Si tienes preguntas, contacta al administrador.
 
-# Atentamente,
-# El equipo administrativo''',
-#                 from_email=settings.DEFAULT_FROM_EMAIL,
-#                 recipient_list=[user.email],
-#                 fail_silently=True,
-#             )
-#         except Exception as e:
-#             print(f"❌ Error enviando email de rechazo: {e}")
+                Atentamente,
+                El equipo administrativo de Black Diamond''',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+                fail_silently=True,
+            )
+        except Exception as e:
+            print(f"❌ Error enviando email de rechazo: {e}")
 
 
 # ==================== MLM SYSTEM FUNCTIONS ====================

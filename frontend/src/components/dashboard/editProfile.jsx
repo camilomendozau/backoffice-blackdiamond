@@ -173,7 +173,7 @@ function EditProfile() {
                                 />
                             </div>
                             <div className="col-md-6">
-                                <label for="phone_number" className="form-label">Numero de Telefono</label>
+                                <label for="phone_number" className="form-label">Numero de Celular</label>
                                 <input
                                     type="text"
                                     className="form-control inputfield"
@@ -195,9 +195,9 @@ function EditProfile() {
                                 </select>
                             </div>
                             <div className="col-md-6">
-                                <label for="date_of_birth" className="form-label">Fecha de Nacimiento<small className="text-primary fw-bold">(YYYY-MM-DD)</small></label>
+                                <label for="date_of_birth" className="form-label">Fecha de Nacimiento<small className="text-primary fw-bold"> (DD/MM/YYYY)</small></label>
                                 <input
-                                    type="text"
+                                    type="date"
                                     // pattern="\d{4}-\d{2}-\d{2}"
                                     className="form-control inputfield"
                                     id="date_of_birth"
@@ -220,7 +220,7 @@ function EditProfile() {
                                     name="bank_name"
                                     value={bank_name}
                                     onChange={e => onChange(e)}
-                                    required />
+                                    />
                             </div>
                             <div className="col-md-6">
                                 <label for="account_name" class="form-label">Nombre de propietario</label>
@@ -231,7 +231,7 @@ function EditProfile() {
                                     name="account_name"
                                     value={account_name}
                                     onChange={e => onChange(e)}
-                                    required />
+                                    />
                             </div>
                             <div className="col-md-6">
                                 <label for="account_number" className="form-label">Numero de Cuenta</label>
@@ -242,7 +242,7 @@ function EditProfile() {
                                     name="account_number"
                                     value={account_number}
                                     onChange={e => onChange(e)}
-                                    required />
+                                     />
                             </div>
 
                             <section className="col-12 mt-5">
@@ -257,7 +257,7 @@ function EditProfile() {
                                     onChange={e => onChange(e)}
                                     name="home_address"
                                     value={home_address}
-                                    required
+                                    
                                 ></textarea>
                             </div>
                             <div className="col-md-6">
@@ -269,7 +269,7 @@ function EditProfile() {
                                     name="local_govt"
                                     value={local_govt}
                                     onChange={e => onChange(e)}
-                                    required />
+                                     />
                             </div>
                             <div className="col-md-6">
                                 <label for="state_of_origin" className="form-label">Pais de Origen</label>
@@ -280,7 +280,7 @@ function EditProfile() {
                                     name="state_of_origin"
                                     value={state_of_origin}
                                     onChange={e => onChange(e)}
-                                    required />
+                                     />
                             </div>
 
                             <div className="col-md-6">
@@ -292,7 +292,7 @@ function EditProfile() {
                                     name="nationality"
                                     value={nationality}
                                     onChange={e => onChange(e)}
-                                    required />
+                                     />
                             </div>
                         </section>
 
