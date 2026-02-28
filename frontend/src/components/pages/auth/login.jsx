@@ -63,10 +63,10 @@ function Login({ login, isAuthenticated, error }) {
 
     return (
         <section style={myStyle}>
-            <section class="container reg-forms min-vh-100">
-                <div class="row min-vh-100">
-                    <section class="col-lg-5 mx-auto min-vh-100">
-                        <section className="px-4 py-6 mx-auto bg-light min-vh-100" >
+            <section className="container reg-forms min-vh-100">
+                <div className="row min-vh-100">
+                    <section className="col-lg-5 mx-auto min-vh-100 d-flex align-items-center">
+                        <section className="px-5 py-6 mx-auto bg-light min-vh-60 rounded-3" >
                             <Link to="/" className="text-decoration-none">
                                 <header className="text-center mb-5">
                                     <img src={companyInfo.get_logo_url} alt="" width="50" height="50" className="mx-auto" />
