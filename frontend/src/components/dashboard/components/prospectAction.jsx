@@ -49,26 +49,16 @@ function ProspectActions({ userCode }) {
 
     return (
         <div className="container mt-4">
-            {/* Status Bar */}
-            <div className={`alert ${isConnected ? 'alert-success' : 'alert-warning'} d-flex justify-content-between align-items-center`}>
-                <span>
-                    {isConnected ? '✅ Conectado en tiempo real' : '⚠️ Reconectando...'}
-                </span>
-                <small>Total prospectos: {prospects.length}</small>
-            </div>
-
-            {error && (
-                <div className="alert alert-danger">
-                    ❌ Error: {error}
-                </div>
-            )}
 
             <div className="row">
                 {/* Lista de Prospectos */}
                 <div className="col-lg-4">
                     <div className="card">
-                        <div className="card-header bg-primary">
-                            <h5 className="mb-0 text-white">Prospectos Activos</h5>
+                        <div className="card-header bg-temporary d-flex justify-content-between align-items-center">
+                            <h5 className="mb-0 text-white">Lista de Prospectos</h5>
+                            <span className="badge bg-warning rounded">
+                                {prospects.length || 0}
+                            </span>
                         </div>
                         <div className="card-body p-0" style={{ maxHeight: '600px', overflowY: 'auto' }}>
                             {prospects.length === 0 ? (
@@ -97,7 +87,7 @@ function ProspectActions({ userCode }) {
                                                         {prospect.country || 'País desconocido'}
                                                     </small>
                                                 </div>
-                                                <span className="badge bg-primary rounded-pill">
+                                                <span className="badge bg-danger rounded-pill">
                                                     {prospect.total_actions || 0}
                                                 </span>
                                             </div>
@@ -113,8 +103,8 @@ function ProspectActions({ userCode }) {
                 <div className="col-lg-8">
                     {selectedProspect ? (
                         <div className="card">
-                            <div className="card-header bg-info text-white">
-                                <h5 className="mb-0">
+                            <div className="card-header bg-temporary">
+                                <h5 className="mb-0 text-white">
                                     Acciones de {selectedProspect.first_name || selectedProspect.last_name? (selectedProspect.first_name+' '+selectedProspect.last_name) : 'Prospecto'}
                                 </h5>
                             </div>
@@ -197,6 +187,20 @@ function ProspectActions({ userCode }) {
                         </div>
                     )}
                 </div>
+            </div>
+            <div className="d-flex align-items-start justify-content-between mt-4">
+                <div className={`alert ${isConnected ? 'alert-success' : 'alert-warning'} d-flex justify-content-between align-items-center`}>
+                    <small>Estado de Conexión con Prospectos:</small>
+                    <span>
+                        {isConnected ? ' Conectado en tiempo real ✅' : ' Reconectando... ⚠️'}
+                    </span>
+                </div>
+
+                {error && (
+                    <div className="alert alert-danger">
+                        ❌ Error: {error}
+                    </div>
+                )}
             </div>
         </div>
     );

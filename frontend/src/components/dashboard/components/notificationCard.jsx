@@ -83,7 +83,7 @@ const NotificationCard = ({ popover }) => {
                                         <div className="fw-bold">{item.subject}</div>
                                         {item.message}
                                     </div>
-                                    <Badge bg={item.is_read === false ? "danger" : "primary"} pill>
+                                    <Badge bg={item.is_read === false ? "danger" : "success"} pill>
                                         {item.is_read === false ? "No Leido" : "Leido"}
                                     </Badge>
                                 </ListGroup.Item>

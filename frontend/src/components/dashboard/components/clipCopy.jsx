@@ -29,7 +29,7 @@ const CopyToClipboardButton = ({ text }) => {
                 overlay={renderTooltip}
             >
                 <span onClick={handleCopyToClipboard}>
-                    <i className="fa-regular fa-clipboard text-primary"></i>
+                    <i className="fs-6 fa-regular fa-clipboard text-primary"></i>
                 </span>
             </OverlayTrigger>
         </>

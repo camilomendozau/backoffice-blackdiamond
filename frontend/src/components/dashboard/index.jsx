@@ -34,14 +34,14 @@ function DashboardHome() {
         <section className="container mt-4">
             <UpdateProfileAlert />
             <div class="row row-cols-1 row-cols-lg-4 g-4">
-                <div class="col">
+                {/* <div class="col">
                     <div class="card">
                         <div class="card-body text-center" >
                             <p class="card-text">Balance Total</p>
                             <h5 class="card-title">{`N${userAccountInfo.total_balance}`}</h5>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 {userInfo.is_superuser &&
                     (<div class="col">
                         <div class="card text-center">
@@ -55,7 +55,7 @@ function DashboardHome() {
                         </div>
                     </div>)
                 }
-                <div class="col">
+                {/* <div class="col">
                     <div class="card">
                         <div class="card-body text-center">
                             <p class="card-text">Bonos por Unir</p>
@@ -70,7 +70,7 @@ function DashboardHome() {
                             <h5 class="card-title">{`N${userAccountInfo.referral_bonus_earned}`}</h5>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
 
 

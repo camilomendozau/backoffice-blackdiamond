@@ -126,76 +126,76 @@ function DashboardSideBar({ logout, isAuthenticated }) {
     }
 
     //List Downline
-    const fetchDownlineData = async () => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `JWT ${localStorage.getItem('access')}`,
-                    'Accept': 'application/json'
-                }
-            };
+    // const fetchDownlineData = async () => {
+    //     if (localStorage.getItem('access')) {
+    //         const config = {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `JWT ${localStorage.getItem('access')}`,
+    //                 'Accept': 'application/json'
+    //             }
+    //         };
 
-            try {
-                axios.get(`${process.env.REACT_APP_API_URL}/dashboard/downlines`, config)
-                    .then(res => {
-                        setDownlineData(res.data)
-                    })
-            } catch (err) {
-                console.error("Usuario no autenticado");
-            }
-        } else {
-            console.error("Usuario no autenticado");
-        }
-    }
+    //         try {
+    //             axios.get(`${process.env.REACT_APP_API_URL}/dashboard/downlines`, config)
+    //                 .then(res => {
+    //                     setDownlineData(res.data)
+    //                 })
+    //         } catch (err) {
+    //             console.error("Usuario no autenticado");
+    //         }
+    //     } else {
+    //         console.error("Usuario no autenticado");
+    //     }
+    // }
 
-    //List Refferals
-    const fetchRefferalData = async () => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `JWT ${localStorage.getItem('access')}`,
-                    'Accept': 'application/json'
-                }
-            };
+    // //List Refferals
+    // const fetchRefferalData = async () => {
+    //     if (localStorage.getItem('access')) {
+    //         const config = {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `JWT ${localStorage.getItem('access')}`,
+    //                 'Accept': 'application/json'
+    //             }
+    //         };
 
-            try {
-                axios.get(`${process.env.REACT_APP_API_URL}/dashboard/refferals`, config)
-                    .then(res => {
-                        setRefferalData(res.data)
-                    })
-            } catch (err) {
-                console.error("Usuario no autenticado");
-            }
-        } else {
-            console.error("Usuario no autenticado");
-        }
-    }
+    //         try {
+    //             axios.get(`${process.env.REACT_APP_API_URL}/dashboard/refferals`, config)
+    //                 .then(res => {
+    //                     setRefferalData(res.data)
+    //                 })
+    //         } catch (err) {
+    //             console.error("Usuario no autenticado");
+    //         }
+    //     } else {
+    //         console.error("Usuario no autenticado");
+    //     }
+    // }
 
-    //List Withdrawals
-    const fetchWithdrawalData = async () => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `JWT ${localStorage.getItem('access')}`,
-                    'Accept': 'application/json'
-                }
-            };
+    // //List Withdrawals
+    // const fetchWithdrawalData = async () => {
+    //     if (localStorage.getItem('access')) {
+    //         const config = {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `JWT ${localStorage.getItem('access')}`,
+    //                 'Accept': 'application/json'
+    //             }
+    //         };
 
-            try {
-                axios.get(`${process.env.REACT_APP_API_URL}/dashboard/withdrawals`, config)
-                    .then(res => {
-                        setWithdrawalData(res.data)
-                    })
-            } catch (err) {
-                console.error("Usuario no autenticado");
-            }
-        } else {
-            console.error("Usuario no autenticado");
-        }
-    }
+    //         try {
+    //             axios.get(`${process.env.REACT_APP_API_URL}/dashboard/withdrawals`, config)
+    //                 .then(res => {
+    //                     setWithdrawalData(res.data)
+    //                 })
+    //         } catch (err) {
+    //             console.error("Usuario no autenticado");
+    //         }
+    //     } else {
+    //         console.error("Usuario no autenticado");
+    //     }
+    // }
 
     //User Account
     const fetchUserAccountInfoData = async () => {
@@ -262,13 +262,13 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                                                     <span></span>
                                                     Hola, {userInfo.first_name}
                                                 </p>
-                                                <li className='nav-link text-white py-1'>
+                                                <li className='nav-link py-1'>
                                                     <NavLink to="/dashboard" end className='text-decoration-none' aria-current="page">
                                                         <i className="fs-6 fa-solid fa-house"></i>
                                                         <span className="ms-1 d-sm-inline">Panel</span>
                                                     </NavLink>
                                                 </li>
-                                                <li class="nav-link py-1">
+                                                <li className="nav-link py-1">
                                                     <NavLink to="/dashboard/campañas" end className='text-decoration-none' aria-current="page">
                                                         <i class="fs-6 fa-solid fa-clipboard-list"></i>
                                                         <span className="ms-1 d-sm-inline">Campañas</span>
@@ -351,11 +351,11 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                                     {/* "my-container active-cont " */}
                                     <div className={toggleSideMenu ? "my-container active-cont " : null}>
                                         {/* dashboard top menu */}
-                                        <nav className='navbar navbar-dark bg-white shadow sticky-top' >
+                                        <nav className='navbar navbar-dark bg-temporary shadow sticky-top' >
                                             <div className="container-fluid">
                                                 <Link>
                                                     <i
-                                                        className="fs-3 fa-solid fa-bars text-primary"
+                                                        className="fs-3 fa-solid fa-bars text-white"
                                                         id="menu-btn"
                                                         onClick={handleToggleSideMenu}
                                                     >
@@ -364,7 +364,7 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                                                 <section>
                                                     <OverlayTrigger trigger="click" placement="bottom" overlay={popover} rootClose>
                                                         <span className="me-3 position-relative" >
-                                                            <i className="fs-5 fa-solid fa-bell text-primary">
+                                                            <i className="fs-5 fa-solid fa-bell text-white">
                                                                 <span className={isAnyNewNotification ? "position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1" : "position-absolute top-0 start-100 translate-middle"}>
                                                                     <span className="visually-hidden">
                                                                         Mensajes sin leer
