@@ -1,17 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserInfoContext } from "./navBar";
-import { DownlineListContext, ReferralListContext, WithdrawalListContext, UserAccountInfoContext } from "./navBar";
+// import { DownlineListContext, ReferralListContext, WithdrawalListContext, UserAccountInfoContext } from "./navBar";
 import CopyToClipboardButton from "./components/clipCopy";
 import UpdateProfileAlert from "./components/updateProfileAlert";
 import ProspectActions from "./components/prospectAction";
+import { useProspectPage } from '../../context/prospectPageContext';
+
 
 
 function DashboardHome() {
     // const downlineList = useContext(DownlineListContext)
     // const referralList = useContext(ReferralListContext)
     // const withdrawalList = useContext(WithdrawalListContext)
-    const userAccountInfo = useContext(UserAccountInfoContext)
+    // const userAccountInfo = useContext(UserAccountInfoContext)
 
 
     // Downline List
@@ -26,9 +28,9 @@ function DashboardHome() {
     // //Withdrawal List
     // const reversedWithdrawalList = withdrawalList.reverse();
     // const lastFourWithdrawals = reversedWithdrawalList.slice(0, 4)
-
+    const {prospectPageUrl} = useProspectPage();
     //User Info
-    const userInfo = useContext(UserInfoContext)
+    const {userInfo} = useContext(UserInfoContext)
 
     return (
         <section className="container mt-4">
@@ -42,12 +44,27 @@ function DashboardHome() {
                         </div>
                     </div>
                 </div> */}
+                <div class="col">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Enlace de Pagina de Prospecto</h5>
+                            <code class="card-text">{prospectPageUrl??"http://localhost:4321"}</code>
+                            <span className="ms-3 d-flex align-items-center justify-content-around">
+                                <CopyToClipboardButton text={prospectPageUrl??"http://localhost:4321"} />
+                                <a href={prospectPageUrl??"http://localhost:4321"} target="_blank" rel="noopener noreferrer">
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-6"></i>
+                                </a>
+                            </span>    
+                        </div>
+                    </div>
+                </div>
+                
                 {userInfo.is_superuser &&
                     (<div class="col">
                         <div class="card text-center">
                             <div class="card-body">
                                 <h5 class="card-title">Enlace de invitacion a Crear Cuenta</h5>
-                                <p class="card-text">{"127.0.0.1:8000/signup/?refCode="+userInfo.code}</p>
+                                <p class="card-text m-1">{"127.0.0.1:8000/signup/?refCode="+userInfo.code}</p>
                                 <span className="ms-3">
                                     <CopyToClipboardButton text={"127.0.0.1:8000/signup/?refCode="+userInfo.code} />
                                 </span>

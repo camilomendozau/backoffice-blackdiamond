@@ -10,17 +10,16 @@ from .serializer import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.http import JsonResponse
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework import status
 from rest_framework.views import APIView
 from djoser.views import UserViewSet
-from djoser import signals
 from django.core.cache import cache
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from django.utils import timezone
 from rest_framework.permissions import BasePermission
+import logging
 
 
 def process_mlm_system():
@@ -64,9 +63,23 @@ class PaymentView(APIView):
 class UserUpdateView(UserViewSet):
     serializer_class = UserInfoSerializer
 
+    # def update(self, request, *args, **kwargs):
+    #     response = super().update(request, *args, **kwargs)
+    #     return response
+    
     def update(self, request, *args, **kwargs):
-        response = super().update(request, *args, **kwargs)
-        return response
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()  # ← va directo a tu perform_update, sin pasar por Djoser
+        return Response(serializer.data)
+    
+    # def perform_update(self, serializer):
+    #     super(UserViewSet, self).perform_update(serializer)
+    
+    def perform_update(self, serializer):
+        serializer.save() 
 
 
 class RefCodeCheckView(generics.RetrieveAPIView):
@@ -228,69 +241,37 @@ class LevelInformationView(APIView):
         serializer = LevelInformationSerializer(level_information, many=True)
         return Response(serializer.data)
 
-
-# ==================== VISTAS DE PROSPECT ====================
-
 class ProspectActionView(APIView):
-    """
-    POST /api/prospect-actions/
-    
-    Recibe acciones desde ProspectPage y las guarda en BD
-    Transmite vía WebSocket al Dashboard en tiempo real
-    
-    Body esperado:
-    {
-        "session_id": "uuid",
-        "id_ref": "uuid (código del usuario)",
-        "action": "page_view" | "video_start" | "video_end" | "form_submit",
-        "prospect_id": "uuid",
-        "first_name": "Juan",
-        "last_name": "Pérez",
-        "email": "juan@example.com",
-        "phone": "+591 70123456",
-        "country": "Bolivia",
-        "departamento": "La Paz",
-        "user_agent": "Mozilla/5.0...",
-        "url": "/landing",
-        "details": {}
-    }
-    """
     permission_classes = []
-    CACHE_TIMEOUT = 60 * 60 * 24  # 24 horas
-    
+    CACHE_TIMEOUT = 60 * 60 * 24  # 24 horas — solo para prospect.id
+
     def post(self, request):
         try:
-            # 1. Extraer datos requeridos
             session_id = request.data.get('session_id')
             id_ref = request.data.get('id_ref')
             action = request.data.get('action')
             prospect_id = request.data.get('prospect_id')
-            
-            # Validaciones básicas
+
             if not all([session_id, id_ref, action]):
                 return Response(
-                    {'detail': 'session_id, id_ref, and action are required'}, 
+                    {'detail': 'session_id, id_ref, and action are required'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-            
-            # 2. Verificar código de referencia
+
             user_account = self._get_user_account(id_ref)
             if not user_account:
                 return Response(
-                    {'detail': 'Invalid reference code'}, 
+                    {'detail': 'Invalid reference code'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-            
-            # 3. Obtener o crear prospecto (con caché)
+
             prospect, created = self._get_or_create_prospect(
                 prospect_id, id_ref, session_id, request
             )
-            
-            # 4. Actualizar datos del prospecto si ya existe
+
             if not created:
                 self._update_prospect_if_needed(prospect, request.data)
-            
-            # 5. Crear la acción (SIN campo ip)
+
             action_obj = ProspectAction.objects.create(
                 prospect=prospect,
                 event_name=action,
@@ -298,114 +279,94 @@ class ProspectActionView(APIView):
                 timestamp=request.data.get('timestamp', timezone.now()),
                 path=request.data.get('url', ''),
                 session_id=session_id,
-                # ip eliminado del modelo
             )
-            
-            # 6. BROADCAST WebSocket en tiempo real
+
             if created:
                 self._broadcast_new_prospect(id_ref, prospect)
-            
+
             self._broadcast_new_action(id_ref, str(prospect.id), action_obj, prospect)
-            
-            # 7. Respuesta exitosa
+
             return Response({
                 'ok': True,
-                'prospect_id': str(prospect.id),
-                'action_id': action_obj.id,
-                'created': created
+                'phone_number': user_account.get_phone_number(),
+                'referer_image': user_account.get_image_url(),
             }, status=status.HTTP_201_CREATED)
-            
+
         except Exception as e:
-            import logging
             logger = logging.getLogger(__name__)
             logger.exception("Error in ProspectActionView")
-            
             return Response(
-                {'detail': 'Internal server error'}, 
+                {'detail': 'Internal server error'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-    
+
     def _get_user_account(self, id_ref):
-        """Obtiene UserAccount con caché para evitar consultas repetidas"""
-        cache_key = f'user_account_code:{id_ref}'
-        user_account = cache.get(cache_key)
-        
-        if not user_account:
-            try:
-                user_account = UserAccount.objects.get(code=id_ref)
-                cache.set(cache_key, user_account, 60 * 60)  # 1 hora
-            except UserAccount.DoesNotExist:
-                return None
-        
-        return user_account
-    
+        """Siempre consulta BD — datos frescos en cada request"""
+        try:
+            return UserAccount.objects.get(code=id_ref)
+        except UserAccount.DoesNotExist:
+            return None
+
     def _get_or_create_prospect(self, prospect_id, id_ref, session_id, request):
-        """Obtiene o crea prospecto con caché"""
+        """
+        Cachea solo el prospect.id (inmutable) para evitar get_or_create
+        en cada acción del mismo visitante dentro de la misma sesión
+        """
         cache_key = f'prospect:{id_ref}:{session_id}'
         cached_prospect_id = cache.get(cache_key)
-        
+
         if cached_prospect_id:
             try:
                 prospect = Prospect.objects.get(id=cached_prospect_id)
                 return prospect, False
             except Prospect.DoesNotExist:
                 cache.delete(cache_key)
-        
-        # Crear o buscar en BD
+
         prospect, created = Prospect.objects.get_or_create(
             prospect_id=prospect_id,
             defaults={
                 'user_code': id_ref,
                 'prospect_agent': request.data.get('user_agent', ''),
-                'country': request.data.get('country', ''),  # ← País
-                'departamento': request.data.get('departamento', ''),  # ← Departamento boliviano
+                'country': request.data.get('country', ''),
+                'departamento': request.data.get('departamento', ''),
                 'first_name': request.data.get('first_name', ''),
                 'last_name': request.data.get('last_name', ''),
                 'email': request.data.get('email', ''),
                 'phone': request.data.get('phone', ''),
             }
         )
-        
-        # Guardar en caché
+
         cache.set(cache_key, prospect.id, self.CACHE_TIMEOUT)
         return prospect, created
-    
+
     def _update_prospect_if_needed(self, prospect, data):
-        """
-        Actualiza campos vacíos del prospecto
-        Solo actualiza si el campo está vacío (NULL o '')
-        """
+        """Solo actualiza campos que estén vacíos"""
         fields_to_update = []
-        
-        # Mapeo completo de campos actualizables
+
         field_mapping = {
             'email': 'email',
             'phone': 'phone',
             'first_name': 'first_name',
             'last_name': 'last_name',
-            'country': 'country',  # ← País
-            'departamento': 'departamento',  # ← Departamento
+            'country': 'country',
+            'departamento': 'departamento',
         }
-        
-        # Solo actualizar campos que estén vacíos
+
         for data_field, model_field in field_mapping.items():
             value = data.get(data_field)
             if value and not getattr(prospect, model_field):
                 setattr(prospect, model_field, value)
                 fields_to_update.append(model_field)
-        
-        # Guardar solo si hay cambios
+
         if fields_to_update:
             prospect.save(update_fields=fields_to_update)
-    
+
     def _broadcast_new_action(self, user_code, prospect_id, action_obj, prospect):
-        """Transmite nueva acción vía WebSocket a todos los dashboards conectados"""
         channel_layer = get_channel_layer()
-        
+
         action_data = serialize_action_simple(action_obj)
         prospect_data = serialize_prospect_simple(prospect)
-        
-        # Broadcast al grupo de este user_code (todos sus prospectos)
+
         async_to_sync(channel_layer.group_send)(
             f'prospect_actions_{user_code}',
             {
@@ -414,8 +375,7 @@ class ProspectActionView(APIView):
                 'prospect': prospect_data
             }
         )
-        
-        # Broadcast al grupo de este prospecto específico
+
         async_to_sync(channel_layer.group_send)(
             f'prospect_{prospect_id}',
             {
@@ -423,13 +383,12 @@ class ProspectActionView(APIView):
                 'action': action_data
             }
         )
-    
+
     def _broadcast_new_prospect(self, user_code, prospect):
-        """Transmite nuevo prospecto vía WebSocket"""
         channel_layer = get_channel_layer()
-        
+
         prospect_data = serialize_prospect_simple(prospect)
-        
+
         async_to_sync(channel_layer.group_send)(
             f'prospect_actions_{user_code}',
             {
@@ -437,18 +396,6 @@ class ProspectActionView(APIView):
                 'prospect': prospect_data
             }
         )
-    
-    def _get_client_ip(self, request):
-        """
-        Obtiene la IP real del cliente
-        NOTA: Función mantenida para uso futuro, aunque 'ip' fue eliminado del modelo
-        """
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0].strip()
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip
 
 
 class ProspectListView(APIView):
@@ -751,6 +698,60 @@ class RejectUserView(APIView):
             )
         except Exception as e:
             print(f"❌ Error enviando email de rechazo: {e}")
+
+class ProspectPageConfigView(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly, ]
+
+    def get_object(self, user):
+        try:
+            return ProspectPageConfig.objects.get(user=user)
+        except ProspectPageConfig.DoesNotExist:
+            return Response({'detail': 'No encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+    # def dispatch(self, request, *args, **kwargs):
+    #     print("DISPATCH EJECUTADO", request.method)  # ← si esto no aparece, ni entra a la clase
+    #     return super().dispatch(request, *args, **kwargs)
+    
+    def get(self, request, u_code): 
+        try:
+            userId = UserAccount.objects.get(code=u_code).id
+            config = ProspectPageConfig.objects.get(user_id=userId)
+        except ProspectPageConfig.DoesNotExist:
+            return Response({'detail': 'No encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = ProspectPageConfigSerializer(config)
+        return Response(serializer.data)
+    
+    def patch(self, request):
+        print(request.data)
+        config = self.get_object(request.user)
+        if config is None:
+            return Response(
+                {'detail': 'No existe configuración para este usuario.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = ProspectPageConfigSerializer(
+            config,
+            data=request.data,
+            partial=True  # ← clave, permite enviar solo los campos que quieres modificar
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def post(self, request):
+    #     if self.get_object(request.user):
+    #         return Response(
+    #             {'detail': 'Ya existe una configuración. Usa PUT o PATCH para actualizar.'},
+    #             status=status.HTTP_400_BAD_REQUEST
+    #         )
+    #     serializer = ProspectPageConfigSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save(user=request.user)
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 # ==================== MLM SYSTEM FUNCTIONS ====================

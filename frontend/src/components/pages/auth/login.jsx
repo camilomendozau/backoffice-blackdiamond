@@ -7,19 +7,19 @@ import { CompanyInformationContext } from "../../../App";
 import LoaderIcon from "../../cards/utilities/spinner";
 
 const pic = {
-    url: 'https://cdn-3.expansion.mx/dims4/default/a1df99e/2147483647/strip/true/crop/1200x803+0+0/resize/1800x1205!/format/webp/quality/80/?url=https%3A%2F%2Fcdn-3.expansion.mx%2Fa2%2F7a%2F6cdbc7a9465da1fe41f94286ef46%2Fhome-office-istock-1221598194.jpeg'
+    url: 'https://res.cloudinary.com/dbnf8c8jf/image/upload/v1774910694/background2_mfzfn1.jpg'
 }
-
+// rgba(0, 61, 43, 0.5)
 export const myStyle = {
-    backgroundImage: `linear-gradient(0deg, rgba(0, 61, 43, 0.5), rgba(0, 61, 43, 0.5)), url(${pic.url})`,
+    backgroundImage: `linear-gradient(0deg, rgba(51, 97, 130, 0.6), rgba(51, 97, 130, 0.6)), url(${pic.url})`,
     height: '100%',
-    backgroundSize: '',
     backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+	backgroundSize: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundAttachment: 'fixed'
-
 };
 
 function Login({ login, isAuthenticated, error }) {
@@ -69,12 +69,12 @@ function Login({ login, isAuthenticated, error }) {
                         <section className="px-5 py-6 mx-auto bg-light min-vh-60 rounded-3" >
                             <Link to="/" className="text-decoration-none">
                                 <header className="text-center mb-5">
-                                    <img src={companyInfo.get_logo_url} alt="" width="50" height="50" className="mx-auto" />
+                                    <img src={companyInfo.get_logo_url} alt="company-logo" width="100" height="50" className="mx-auto" />
                                     <h5 className="mt-1">{companyInfo.company_name}</h5>
                                 </header>
                             </Link>
 
-                            <h3 className="text-center mb-2">Bienvenid@ de nuevo!</h3>
+                            <h3 className="text-center mb-2">Bienvenid@ al Backoffice</h3>
                             {error ?
                                 <div className="alert alert-danger fw-bold mt-3" role="alert">
                                     Correo Electronico / Contraseña Invalidos
@@ -89,19 +89,19 @@ function Login({ login, isAuthenticated, error }) {
                                         name="email" value={email} onChange={e => onChange(e)} required />
                                 </div>
 
-                                <div class="mb-3">
+                                <div className="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Contraseña</label>
                                     <input type="password" class="form-control inputfield" id="exampleInputPassword1"
                                         name="password" value={password} onChange={e => onChange(e)}
                                         minLength='6' required />
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div className="d-flex justify-content-between">
                                     <div class="mb-3 form-check">
                                         <input type="checkbox" class="form-check-input" id="exampleCheck1" />
                                         <label class="form-check-label" for="exampleCheck1"><small class="fw-bold">Recordar Sesion</small></label>
                                     </div>
                                     <div>
-                                        <Link to="/reset-password" class="text-end text-decoration-none fw-bold"><small>Olvidaste 
+                                        <Link to="/reset-password" class="text-end text-decoration-none fw-bold"><small>Olvidaste
                                             tu contraseña?</small></Link>
                                     </div>
                                 </div>

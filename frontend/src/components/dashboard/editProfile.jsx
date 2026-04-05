@@ -5,7 +5,7 @@ import LoaderIcon from "../cards/utilities/spinner";
 import SuccessModal from "./components/successModalMsg";
 
 function EditProfile() {
-    const CurrentUserInfo = useContext(UserInfoContext)
+    const { userInfo, setUserInfo, refetchUser } = useContext(UserInfoContext); // Asume que tienes setUserInfo
     const [loading, setLoading] = useState(false);
 
     // Update Profile Pic
@@ -16,26 +16,29 @@ function EditProfile() {
 
     //Modal
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
+    
+    const handleClose = () => {
+        setShow(false);
+    }
+    
     const handleShow = () => setShow(true);
 
     const [formData, setFormData] = useState({
-        first_name: CurrentUserInfo.first_name,
-        last_name: CurrentUserInfo.last_name,
-        email: CurrentUserInfo.email,
-        phone_number: CurrentUserInfo.phone_number,
-        date_of_birth: CurrentUserInfo.date_of_birth,
-        gender: CurrentUserInfo.gender,
-        home_address: CurrentUserInfo.home_address,
-        local_govt: CurrentUserInfo.local_govt,
-        state_of_origin: CurrentUserInfo.state_of_origin,
-        nationality: CurrentUserInfo.nationality,
-        image: CurrentUserInfo.image,
-        get_photo_url: CurrentUserInfo.get_photo_url,
-        bank_name: CurrentUserInfo.bank_name,
-        account_name: CurrentUserInfo.account_name,
-        account_number: CurrentUserInfo.account_number,
-
+        first_name: userInfo.first_name,
+        last_name: userInfo.last_name,
+        email: userInfo.email,
+        phone_number: userInfo.phone_number,
+        date_of_birth: userInfo.date_of_birth,
+        gender: userInfo.gender,
+        home_address: userInfo.home_address,
+        local_govt: userInfo.local_govt,
+        state_of_origin: userInfo.state_of_origin,
+        nationality: userInfo.nationality,
+        image: userInfo.image,
+        get_photo_url: userInfo.get_photo_url,
+        bank_name: userInfo.bank_name,
+        account_name: userInfo.account_name,
+        account_number: userInfo.account_number,
     });
 
     const { first_name, last_name, phone_number, date_of_birth, home_address, local_govt, state_of_origin, nationality, get_photo_url, bank_name, account_name, account_number } = formData;
@@ -57,53 +60,62 @@ function EditProfile() {
     const handleErrorClose = () => setErrorShow(false);
     const handleErrorShow = () => setErrorShow(true);
 
-    const onSubmit = e => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
-        // declare the data fetching function
-        const fetchData = async () => {
-            if (localStorage.getItem('access')) {
-                const config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': `JWT ${localStorage.getItem('access')}`,
-                        'Accept': 'application/json'
-                    }
-                };
-
-                const formData = new FormData();
-                formData.append('first_name', first_name);
-                formData.append('last_name', last_name);
-                formData.append('phone_number', phone_number);
-                formData.append('date_of_birth', date_of_birth);
-                formData.append('home_address', home_address);
-                formData.append('local_govt', local_govt);
-                formData.append('state_of_origin', state_of_origin);
-                formData.append('nationality', nationality);
-                formData.append('bank_name', bank_name);
-                formData.append('account_name', account_name);
-                formData.append('account_number', account_number);
-                formData.append('image', profilePicFile);
-                formData.append('gender', selectedOption);
-
-                try {
-                    setLoading(true)
-                    const res = await axios.put(`${process.env.REACT_APP_API_URL}/auth/users/me/`, formData, config);
-                    if (res.status === 200) {
-                        setLoading(false)
-                        handleShow()
-                    }
-                } catch (err) {
-                    setLoading(false)
-                    setErrorMessage(err.response.data);
-                    handleErrorShow()
+        if (localStorage.getItem('access')) {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `JWT ${localStorage.getItem('access')}`,
+                    'Accept': 'application/json'
                 }
-            } else {
-                console.error("User not authenticated");
-            }
-        }
+            };
 
-        fetchData()
+            const formDataToSend = new FormData();
+            formDataToSend.append('first_name', first_name);
+            formDataToSend.append('last_name', last_name);
+            formDataToSend.append('phone_number', phone_number);
+            formDataToSend.append('date_of_birth', date_of_birth);
+            formDataToSend.append('home_address', home_address);
+            formDataToSend.append('local_govt', local_govt);
+            formDataToSend.append('state_of_origin', state_of_origin);
+            formDataToSend.append('nationality', nationality);
+            formDataToSend.append('bank_name', bank_name);
+            formDataToSend.append('account_name', account_name);
+            formDataToSend.append('account_number', account_number);
+            if (profilePicFile) {
+                formDataToSend.append('image', profilePicFile);
+            }
+            formDataToSend.append('gender', selectedOption || formData.gender);
+
+            try {
+                setLoading(true);
+                const res = await axios.put(
+                    `${process.env.REACT_APP_API_URL}/auth/users/me/`, 
+                    formDataToSend, 
+                    config
+                );
+                
+                if (res.status === 200) {
+                    setUserInfo(res.data);
+                    
+                    setFormData({
+                        ...formData,
+                        ...res.data
+                    });
+                    
+                    setLoading(false);
+                    handleShow();
+                }
+            } catch (err) {
+                setLoading(false);
+                setErrorMessage(err.response?.data || {});
+                handleErrorShow();
+            }
+        } else {
+            console.error("User not authenticated");
+        }
     };
 
     return (
@@ -318,8 +330,8 @@ function EditProfile() {
                 show
                     ?
                     <SuccessModal
-                        title='Profile Updated'
-                        message='You have successfully updated your Profile'
+                        title='Perfil Actualizado'
+                        message='Los datos de tu perfil han sido actualizados exitosamente'
                         show={show}
                         onClose={handleClose}
                     />

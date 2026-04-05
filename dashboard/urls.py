@@ -11,11 +11,14 @@ urlpatterns = [
     path('user-account-info', UserAccountInfoView.as_view()),
     path('user-notifications', UserNotificationView.as_view()),
     path('level-information', LevelInformationView.as_view()),
+    path('prospect-page-config/<str:u_code>', ProspectPageConfigView.as_view()),
+    path('prospect-page-config/', ProspectPageConfigView.as_view()), 
     
     path('prospect-actions', ProspectActionView.as_view()),
     path('prospects/', ProspectListView.as_view(), name='prospect-list'),
     path('prospect/<uuid:prospect_id>/', ProspectDetailView.as_view(), name='prospect-detail'),
     path('prospect-check/', ProspectCheckView.as_view(), name='prospect-check'),
+    
     
     path('admin/pending-users/', PendingUsersListView.as_view(), name='pending-users'),
     path('admin/approve-user/<str:user_code>/', ApproveUserView.as_view(), name='approve-user'),

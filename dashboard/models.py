@@ -7,7 +7,7 @@ from django.conf import settings
 from .utils import generate_ref_code, generate_payment_pin
 from django.core.validators import RegexValidator
 from django.utils import timezone
-import uuid
+import os
 
 
 class UserAccountManager(BaseUserManager):
@@ -66,7 +66,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
-    image = CloudinaryField('image', null=True, blank=True)
+    image = CloudinaryField('image',folder='profiles',null=True, blank=True)
     gender = models.CharField(max_length=7, blank=True,
                               null=True, choices=GENDER)
     status = models.CharField(max_length=9, choices=STATUS, default='Inactive')
@@ -77,8 +77,8 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     bank_name = models.CharField(max_length=50, blank=True, null=True)
     account_name = models.CharField(max_length=50, blank=True, null=True)
     account_number = models.CharField(max_length=10, blank=True, null=True)
-    code = models.CharField(max_length=40, blank=True)
-    plan = models.CharField(max_length=9, choices=PLAN)
+    code = models.CharField(max_length=40, blank=True, db_index=True)
+    plan = models.CharField(max_length=9, choices=PLAN, default='Premium')
     recommended_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, related_name='ref_by')
     refferer_code_used = models.CharField(max_length=40, blank=True)
@@ -87,7 +87,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name',
-                       'phone_number', 'refferer_code_used', 'plan']
+                       'phone_number', 'refferer_code_used']
     ordering = ('email',)
 
     def get_full_name(self):
@@ -98,9 +98,20 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     def get_date_only(self):
         return self.date_joined.date()
+    
+    def get_phone_number(self):
+        if self.phone_number:
+            return "591"+self.phone_number
+        else:
+            return "59172449448"
 
+    # def get_image_url(self):
+    #     return (f"https://res.cloudinary.com/{os.getenv('cloud_name','dbnf8c8jf')}/{self.image}")
+    
     def get_image_url(self):
-        return (f"https://res.cloudinary.com/dkcjpdk1c/image/upload/{self.image}")
+        if not self.image:
+            return "https://cdn-icons-png.flaticon.com/512/147/147142.png"
+        return self.image.url
 
     @property
     def get_photo_url(self):
@@ -313,3 +324,15 @@ class ProspectAction(models.Model):
 
     def __str__(self):
         return f"{self.action} at {self.timestamp}"
+
+class ProspectPageConfig(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE, 
+        related_name='prospect_page_config'
+    )
+    url = models.URLField(max_length=500, blank=True, null=True)
+    initial_video_url = models.URLField(max_length=500,blank=True, null=True)
+    presentation_video_url = models.URLField(max_length=500,blank=True, null=True)
+    catalog_video_url = models.URLField(max_length=500,blank=True, null=True)
+    why_bioliffe_video_url = models.URLField(max_length=500,blank=True, null=True)

@@ -34,6 +34,11 @@ def create_user_account_info(sender, instance, created, **kwargs):
     # Inicializar sistema MLM
     initialized_match_and_referral_bonus_payment()
 
+@receiver(post_save, sender=UserAccount)
+def create_prospect_page_config(sender, instance, created, **kwargs):
+    if created:  #solo cuando el usuario es NUEVO, no cuando se actualiza
+        ProspectPageConfig.objects.create(user=instance)
+
 # Update Match Bonus
 @receiver(post_save, sender=MatchBonus)
 def update_match_bonus(sender, instance, created, **kwargs):
@@ -204,7 +209,6 @@ def notify_superuser_about_new_user(user):
             Nombre: {user.first_name} {user.last_name}
             Email: {user.email}
             Teléfono: {user.phone_number or 'No proporcionado'}
-            Plan: {user.plan}
             Referido por: {referrer_info}
             Código: {user.code}
             Fecha: {user.date_joined.strftime('%d/%m/%Y %H:%M')}

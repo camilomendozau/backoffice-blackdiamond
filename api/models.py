@@ -30,7 +30,7 @@ class CompanyInformation(models.Model):
     youtube_url = models.URLField(blank=True, null=True)
 
     def get_logo_url(self):
-        return (f"https://res.cloudinary.com/dkcjpdk1c/image/upload/{self.logo}")
+        return (f"{self.logo}")
 
     def get_page_header_image(self):
         return (f"https://res.cloudinary.com/dkcjpdk1c/image/upload/{self.page_header_image}")

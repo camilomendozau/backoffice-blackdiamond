@@ -1,4 +1,3 @@
-import NotificationCard from "./components/notificationCard";
 
 const Campaignes = () => {
     return (

@@ -15,18 +15,21 @@ class UserCreateSerializer(UserCreateSerializer):
         #print("Init UserCreateSerializer")
         model = user
         fields = ('id', 'first_name', 'last_name', 'phone_number', 'email', 
-                  'refferer_code_used', 'plan', 'password')
-
+                  'refferer_code_used', 'password')
 
 class UserInfoSerializer(UserSerializer):
     recommended_by_email = serializers.SerializerMethodField()
 
     class Meta(UserSerializer.Meta):
         model = user
-        fields = ('id', 'first_name', 'last_name', 'phone_number', 'email', 'is_superuser' ,'get_photo_url',
-                  'date_of_birth', 'gender', 'home_address', 'status', 'local_govt', 'state_of_origin',
-                  'nationality', 'image', 'code', 'plan', 'bank_name', 'account_name', 'account_number', 'date_joined',
-                  'local_govt', 'state_of_origin', 'recommended_by', 'recommended_by_email')
+        fields = (
+            'id', 'first_name', 'last_name', 'phone_number', 'email', 'is_superuser',
+            'get_photo_url', 'date_of_birth', 'gender',
+            'home_address', 'status', 'local_govt', 'state_of_origin',
+            'nationality', 'image', 'code', 'bank_name', 'account_name',
+            'account_number', 'date_joined', 'recommended_by', 'recommended_by_email'
+        )
+        read_only_fields = ('is_superuser', 'code', 'date_joined', 'email')
 
     def get_recommended_by_email(self, obj):
         if obj.recommended_by:
@@ -34,40 +37,16 @@ class UserInfoSerializer(UserSerializer):
         return None
 
     def update(self, instance, validated_data):
+        image = validated_data.pop('image', None)
+
+        # super() ya actualiza todos los campos y hace .save()
         instance = super().update(instance, validated_data)
 
-        # Perform custom update logic here
-        instance.first_name = validated_data.get(
-            'first_name', instance.first_name)
-        instance.last_name = validated_data.get(
-            'last_name', instance.last_name)
-        instance.phone_number = validated_data.get(
-            'phone_number', instance.phone_number)
-        instance.is_superuser = validated_data.get(
-            'is_superuser', instance.is_superuser)
-        instance.date_of_birth = validated_data.get(
-            'date_of_birth', instance.date_of_birth)
-        instance.gender = validated_data.get('gender', instance.gender)
-        instance.bank_name = validated_data.get(
-            'bank_name', instance.bank_name)
-        instance.account_name = validated_data.get(
-            'account_name', instance.account_name)
-        instance.account_number = validated_data.get(
-            'account_number', instance.account_number)
-        instance.nationality = validated_data.get(
-            'nationality', instance.nationality)
-        instance.state_of_origin = validated_data.get(
-            'state_of_origin', instance.state_of_origin)
-        instance.local_govt = validated_data.get(
-            'local_govt', instance.local_govt)
-        instance.home_address = validated_data.get(
-            'home_address', instance.home_address)
+        if image is not None:
+            instance.image = image
+            instance.save()
 
-        # Update image field
-        if 'image' in validated_data:
-            instance.image = validated_data['image']
-
-        instance.save()
+        instance.refresh_from_db()
         return instance
 
 
@@ -121,6 +100,11 @@ class LevelInformationSerializer(serializers.ModelSerializer):
 class ProspectActionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProspectAction
+        fields = '__all__'
+
+class ProspectPageConfigSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProspectPageConfig
         fields = '__all__'
 
 

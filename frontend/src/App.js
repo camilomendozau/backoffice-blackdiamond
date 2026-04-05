@@ -34,6 +34,7 @@ import { isAuthenticated } from './components/cards/utilities/privateRoute';
 import Notifications from './components/dashboard/notification';
 import ScrollToTop from './components/dashboard/components/scrollToTop';
 import Campaignes from './components/dashboard/campaignes';
+import ProspectPageConfig from './components/dashboard/prospectPage';
 
 
 export const ServiceContext = createContext(null)
@@ -100,14 +101,15 @@ function App() {
                   <Route path="/dashboard" element={<DashboardLayout />}>
                     <Route index element={<DashboardHome />} />
                     <Route path="/dashboard/edit-profile" element={<EditProfile />} />
-                    <Route path="/dashboard/withdrawals" element={<Withdrawals />} />
+                    {/* <Route path="/dashboard/withdrawals" element={<Withdrawals />} />
                     <Route path="/dashboard/levels" element={<Levels />} />
                     <Route path="/dashboard/downlines" element={<Downlines />} />
                     <Route path="/dashboard/payments" element={<Payments />} />
                     <Route path="/dashboard/referrals" element={<Referrals />} />
-                    <Route path="/dashboard/help-and-support" element={<Support />} />
+                    <Route path="/dashboard/help-and-support" element={<Support />} /> */}
                     <Route path="/dashboard/notifications" element={<Notifications />} />
                     <Route path="/dashboard/campañas" element={<Campaignes />} />
+                    <Route path="/dashboard/prospect-config" element={<ProspectPageConfig />} />
                     <Route path="/dashboard/user-management" element={<UserManagement/>} />
                   </Route >
 
