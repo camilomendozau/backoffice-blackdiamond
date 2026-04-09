@@ -1,11 +1,12 @@
-import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext} from "react";
+// import { Link } from "react-router-dom";
 import { UserInfoContext } from "./navBar";
 // import { DownlineListContext, ReferralListContext, WithdrawalListContext, UserAccountInfoContext } from "./navBar";
 import CopyToClipboardButton from "./components/clipCopy";
 import UpdateProfileAlert from "./components/updateProfileAlert";
 import ProspectActions from "./components/prospectAction";
 import { useProspectPage } from '../../context/prospectPageContext';
+
 
 
 
@@ -64,7 +65,7 @@ function DashboardHome() {
                         <div class="card text-center">
                             <div class="card-body">
                                 <h5 class="card-title">Enlace de invitacion a Crear Cuenta</h5>
-                                <p class="card-text m-1">{"127.0.0.1:8000/signup/?refCode="+userInfo.code}</p>
+                                <code class="card-text m-1">{"127.0.0.1:8000/signup/?refCode="+userInfo.code}</code>
                                 <span className="ms-3">
                                     <CopyToClipboardButton text={"127.0.0.1:8000/signup/?refCode="+userInfo.code} />
                                 </span>

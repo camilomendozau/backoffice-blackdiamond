@@ -270,16 +270,17 @@ function DashboardSideBar({ logout, isAuthenticated }) {
                                                             <span className="ms-1 d-sm-inline">Panel</span>
                                                         </NavLink>
                                                     </li>
-                                                    <li className="nav-link py-1">
-                                                        <NavLink to="/dashboard/campañas" end className='text-decoration-none' aria-current="page">
-                                                            <i class="fs-6 fa-solid fa-clipboard-list"></i>
-                                                            <span className="ms-1 d-sm-inline">Campañas</span>
-                                                        </NavLink>
-                                                    </li>
+                                    
                                                     <li className="nav-link py-1">
                                                         <NavLink to="/dashboard/prospect-config" end className='text-decoration-none' aria-current="page">
                                                             <i class="fs-6 fa-solid fa-id-card"></i>
                                                             <span className="ms-1 d-sm-inline">Pagina de Prospecto</span>
+                                                        </NavLink>
+                                                    </li>
+                                                    <li className="nav-link py-1">
+                                                        <NavLink to="/dashboard/training" end className='text-decoration-none' aria-current="page">
+                                                            <i class="fa-solid fa-dumbbell"></i>
+                                                            <span className="ms-1 d-sm-inline">Sistema de Entrenamiento</span>
                                                         </NavLink>
                                                     </li>
                                                     {userInfo.is_superuser && (

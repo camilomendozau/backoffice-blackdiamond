@@ -7,15 +7,15 @@ import { CompanyInformationContext } from "../../../App";
 import LoaderIcon from "../../cards/utilities/spinner";
 
 const pic = {
-    url: 'https://res.cloudinary.com/dbnf8c8jf/image/upload/v1774910694/background2_mfzfn1.jpg'
+    url: 'https://res.cloudinary.com/dbnf8c8jf/image/upload/v1775708214/17973908_e9ly0a.jpg'
 }
 // rgba(0, 61, 43, 0.5)
 export const myStyle = {
     backgroundImage: `linear-gradient(0deg, rgba(51, 97, 130, 0.6), rgba(51, 97, 130, 0.6)), url(${pic.url})`,
-    height: '100%',
+    height: '100vh',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
-	backgroundSize: '100%',
+	backgroundSize: 'cover',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -69,7 +69,7 @@ function Login({ login, isAuthenticated, error }) {
                         <section className="px-5 py-6 mx-auto bg-light min-vh-60 rounded-3" >
                             <Link to="/" className="text-decoration-none">
                                 <header className="text-center mb-5">
-                                    <img src={companyInfo.get_logo_url} alt="company-logo" width="100" height="50" className="mx-auto" />
+                                    <img src={companyInfo.get_logo_url} alt="company-logo" className="mx-auto d-block" style={{ height: '50px', width: 'auto' }}/>
                                     <h5 className="mt-1">{companyInfo.company_name}</h5>
                                 </header>
                             </Link>

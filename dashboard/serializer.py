@@ -103,9 +103,17 @@ class ProspectActionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProspectPageConfigSerializer(serializers.ModelSerializer):
+    # phone_number = serializers.CharField(source='user.phone_number', read_only=True)
+    # referer_image = serializers.CharField(source='user.image.url', read_only=True)
     class Meta:
         model = ProspectPageConfig
-        fields = '__all__'
+        fields = [
+                  'url',
+                  'initial_video_url',
+                  'presentation_video_url',
+                  'catalog_video_url',
+                  'why_bioliffe_video_url',
+                ]
 
 
 def serialize_prospect_simple(prospect):
