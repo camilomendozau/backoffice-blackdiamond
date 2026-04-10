@@ -149,9 +149,27 @@ export default function YouTubePreviewer({
   }, [playing, videoId]);
 
   // ── Limpiar ────────────────────────────────────────────────────────────────
-  const handleClear = () => {
+  const handleClear = async () => {
     try { playerRef.current?.destroy(); } catch (_) {}
     playerRef.current = null;
+
+    if (videoId && saveUrl && localStorage.getItem('access')) {
+    try {
+      await axios.patch(
+        process.env.REACT_APP_API_URL + saveUrl,
+        { [keyToPayload]: null },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${localStorage.getItem('access')}`,
+            'Accept': 'application/json',
+          }
+        }
+      );
+    } catch (err) {
+      console.error('Error al limpiar en BD la URL:', err);
+    }
+  }
     setVideoId(null); setInput(""); setPlaying(false);
     setTitle(""); setError(""); setVideoDuration(null);
     setDurationLoading(false); setSaveSuccess(false); setSaveError("");
@@ -200,7 +218,9 @@ export default function YouTubePreviewer({
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
     <div className={className}>
-
+      {maxDuration !== null && (
+              <span className="badge bg-light text-dark border">Límite: {formatTime(maxDuration)} min.</span>
+      )}
       {/* Input de URL */}
       <div className="input-group mb-3">
         <input
@@ -289,10 +309,6 @@ export default function YouTubePreviewer({
 
             {!durationLoading && videoDuration !== null && (
               <span className="badge bg-secondary">Duración: {formatTime(videoDuration)}</span>
-            )}
-
-            {maxDuration !== null && (
-              <span className="badge bg-light text-dark border">Límite: {formatTime(maxDuration)}</span>
             )}
 
             {exceedsLimit && (

@@ -699,6 +699,8 @@ class RejectUserView(APIView):
         except Exception as e:
             print(f"❌ Error enviando email de rechazo: {e}")
 
+
+
 class ProspectPageConfigView(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly, ]
 
@@ -707,9 +709,7 @@ class ProspectPageConfigView(APIView):
             return ProspectPageConfig.objects.get(user=user)
         except ProspectPageConfig.DoesNotExist:
             return Response({'detail': 'No encontrado.'}, status=status.HTTP_404_NOT_FOUND)
-    # def dispatch(self, request, *args, **kwargs):
-    #     print("DISPATCH EJECUTADO", request.method)  # ← si esto no aparece, ni entra a la clase
-    #     return super().dispatch(request, *args, **kwargs)
+
     
     def get(self, request, u_code): 
         try:
@@ -722,7 +722,6 @@ class ProspectPageConfigView(APIView):
         return Response(serializer.data)
     
     def patch(self, request):
-        print(request.data)
         config = self.get_object(request.user)
         if config is None:
             return Response(

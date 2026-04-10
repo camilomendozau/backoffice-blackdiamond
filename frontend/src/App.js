@@ -2,39 +2,40 @@ import './main.css'
 import { useState, useEffect, createContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Home from './components/pages/home';
-import About from './components/pages/about';
-import Services from './components/pages/services';
-import Contact from './components/pages/contact';
-import PrivacyPolicy from './components/pages/privacyPolicy';
-import TermsAndConditions from './components/pages/termsAndConditions';
-import NoPage from './components/pages/noPage';
-import Layout from './components/pages/layout';
+// import Home from './components/pages/home';
+// import About from './components/pages/about';
+// import Services from './components/pages/services';
+// import Contact from './components/pages/contact';
+// import PrivacyPolicy from './components/pages/privacyPolicy';
+// import TermsAndConditions from './components/pages/termsAndConditions';
+// import NoPage from './components/pages/noPage';
+// import Layout from './components/pages/layout';
 import Login from './components/pages/auth/login';
 import ResetPassword from './components/pages/auth/resetPassword';
 import ResetPasswordConfirm from './components/pages/auth/passwordResetConfirm';
 import Activate from './components/pages/auth/activate';
-import MlMarketing from './components/pages/mlMarketing';
+// import MlMarketing from './components/pages/mlMarketing';
 import 'react-pulse-dot/dist/index.css'
-import ServiceDetail from './components/detailed/serviceDetail';
+// import ServiceDetail from './components/detailed/serviceDetail';
 import { Provider } from 'react-redux';
 import store from './store';
 import DashboardHome from './components/dashboard';
 import DashboardLayout from './components/dashboard/layout';
 import EditProfile from './components/dashboard/editProfile';
-import Withdrawals from './components/dashboard/withdrawals';
-import Levels from './components/dashboard/levels';
-import Downlines from './components/dashboard/downlines';
-import Payments from './components/dashboard/payments';
-import Referrals from './components/dashboard/referrals';
-import Support from './components/dashboard/support';
+import ModuleTrainingViewer from './components/dashboard/moduleViewer';
+// import Withdrawals from './components/dashboard/withdrawals';
+// import Levels from './components/dashboard/levels';
+// import Downlines from './components/dashboard/downlines';
+// import Payments from './components/dashboard/payments';
+// import Referrals from './components/dashboard/referrals';
+// import Support from './components/dashboard/support';
 import UserManagement from './components/dashboard/usermanagement';
 import CreateAccount from './components/pages/auth/signup';
 import { isAuthenticated } from './components/cards/utilities/privateRoute';
 import Notifications from './components/dashboard/notification';
 import ScrollToTop from './components/dashboard/components/scrollToTop';
-import Campaignes from './components/dashboard/campaignes';
 import ProspectPageConfig from './components/dashboard/prospectPage';
+import Training from './components/dashboard/training';
 
 
 export const ServiceContext = createContext(null)
@@ -108,7 +109,8 @@ function App() {
                     <Route path="/dashboard/referrals" element={<Referrals />} />
                     <Route path="/dashboard/help-and-support" element={<Support />} /> */}
                     <Route path="/dashboard/notifications" element={<Notifications />} />
-                    <Route path="/dashboard/campañas" element={<Campaignes />} />
+                    <Route path="/dashboard/training" element={<Training />}/>
+                    <Route path="/dashboard/training/modulo/:id" element={<ModuleTrainingViewer />} /> 
                     <Route path="/dashboard/prospect-config" element={<ProspectPageConfig />} />
                     <Route path="/dashboard/user-management" element={<UserManagement/>} />
                   </Route >
