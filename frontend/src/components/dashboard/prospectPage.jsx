@@ -277,7 +277,7 @@ useEffect(() => {
                 <h5 style={{ textAlign: 'center', margin: '20px' }}>
                     Carga el enlace del Video de YOUTUBE para la pagina de INICIO.
                 </h5>
-                <p style={{ textAlign: 'center', marginBottom: '20px' }}>
+                <p style={{ textAlign: 'center', margin: '10px' }}>
                     Solo el enlace del video de youtube sera aceptado, el video se mostrara al abrir la pagina. El video se adaptara a pantallas grandes y pequeñas.
                 </p>
                 <div className='w-75 mx-auto mb-5'>
@@ -297,7 +297,7 @@ useEffect(() => {
                 <h5 style={{ textAlign: 'center', margin: '20px' }}>
                     Carga el enlace del Video de YOUTUBE para la pagina de PRESENTACION DEL NEGOCIO.
                 </h5>
-                <p style={{ textAlign: 'center', marginBottom: '20px' }}>
+                <p style={{ textAlign: 'center', margin: '10px' }}>
                     Solo el enlace del video de youtube sera aceptado, el video se mostrara al abrir la pagina. El video se adaptara a pantallas grandes y pequeñas.
                 </p>
                 <div className='w-75 mx-auto mb-5'>
@@ -317,7 +317,7 @@ useEffect(() => {
                 <h5 style={{ textAlign: 'center', margin: '20px' }}>
                     Carga el enlace del Video de YOUTUBE para la pagina de CATALOGO DE PRODUCTO.
                 </h5>
-                <p style={{ textAlign: 'center', marginBottom: '20px' }}>
+                <p style={{ textAlign: 'center', margin: '10px' }}>
                     Solo el enlace del video de youtube sera aceptado, el video se mostrara al abrir la pagina. El video se adaptara a pantallas grandes y pequeñas.
                 </p>
                 <div className='w-75 mx-auto mb-5'>
@@ -337,7 +337,7 @@ useEffect(() => {
                 <h5 style={{ textAlign: 'center', margin: '20px' }}>
                     Carga el enlace del Video de YOUTUBE para la pagina de ¿POR QUE BIOLIFFE?
                 </h5>
-                <p style={{ textAlign: 'center', marginBottom: '20px' }}>
+                <p style={{ textAlign: 'center', margin: '10px' }}>
                     Solo el enlace del video de youtube sera aceptado, el video se mostrara al abrir la pagina. El video se adaptara a pantallas grandes y pequeñas.
                 </p>
                 <div className='w-75 mx-auto mb-5'>

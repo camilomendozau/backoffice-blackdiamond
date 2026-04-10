@@ -219,7 +219,7 @@ export default function YouTubePreviewer({
   return (
     <div className={className}>
       {maxDuration !== null && (
-              <span className="badge bg-light text-dark border">Límite: {formatTime(maxDuration)}</span>
+              <span className="badge bg-light text-dark border">Límite: {formatTime(maxDuration)} min.</span>
       )}
       {/* Input de URL */}
       <div className="input-group mb-3">
