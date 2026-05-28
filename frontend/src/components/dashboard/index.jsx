@@ -6,6 +6,7 @@ import CopyToClipboardButton from "./components/clipCopy";
 import UpdateProfileAlert from "./components/updateProfileAlert";
 import ProspectActions from "./components/prospectAction";
 import { useProspectPage } from '../../context/prospectPageContext';
+import Chart from "./components/chart";
 
 
 
@@ -90,8 +91,10 @@ function DashboardHome() {
                     </div>
                 </div> */}
             </div>
-
-
+            <div class="d-flex row g-4 my-1 justify-content-center w-100">
+                <Chart userCode={userInfo.code} />
+            </div>        
+            
             {/* <div class="row g-5 mt-4"> */}
                 {/* <div class="col-lg-6">
                     <div class="card">

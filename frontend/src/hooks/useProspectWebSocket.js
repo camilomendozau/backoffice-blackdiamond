@@ -22,12 +22,12 @@ const useProspectWebSocket = (userCode) => {
             const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
             const wsUrl = `${wsProtocol}//${window.location.host}/ws/prospects/${userCode}/`;
             
-            console.log('🔌 Connecting to:', wsUrl);
+            //console.log('🔌 Connecting to:', wsUrl);
 
             wsRef.current = new WebSocket(wsUrl);
 
             wsRef.current.onopen = () => {
-                console.log('✅ WebSocket connected');
+                //console.log('✅ WebSocket connected');
                 setIsConnected(true);
                 setError(null);
                 reconnectAttemptsRef.current = 0;
@@ -36,7 +36,7 @@ const useProspectWebSocket = (userCode) => {
             wsRef.current.onmessage = (event) => {
                 try {
                     const data = JSON.parse(event.data);
-                    console.log('📩 Message received:', data);
+                    //console.log('📩 Message received:', data);
 
                     switch (data.type) {
                         case 'initial_data':
@@ -46,7 +46,7 @@ const useProspectWebSocket = (userCode) => {
                         case 'new_prospect':
                             setProspects(prev => [data.prospect, ...prev]);
                             // Notificación opcional
-                            console.log('🆕 New prospect:', data.prospect);
+                            //console.log('🆕 New prospect:', data.prospect);
                             break;
 
                         case 'new_action':
@@ -62,15 +62,15 @@ const useProspectWebSocket = (userCode) => {
                                         : prospect
                                 )
                             );
-                            console.log('⚡ New action:', data.action);
+                            //console.log('⚡ New action:', data.action);
                             break;
 
                         case 'pong':
-                            console.log('🏓 Pong received');
+                            //console.log('🏓 Pong received');
                             break;
 
                         default:
-                            console.log('Unknown message type:', data.type);
+                            //console.log('Unknown message type:', data.type);
                     }
                 } catch (err) {
                     console.error('Error parsing message:', err);
@@ -83,7 +83,7 @@ const useProspectWebSocket = (userCode) => {
             };
 
             wsRef.current.onclose = (event) => {
-                console.log('🔌 WebSocket disconnected', event.code);
+                //console.log('🔌 WebSocket disconnected', event.code);
                 setIsConnected(false);
 
                 // Auto-reconectar
@@ -91,7 +91,7 @@ const useProspectWebSocket = (userCode) => {
                     reconnectAttemptsRef.current += 1;
                     const delay = Math.min(1000 * reconnectAttemptsRef.current, 5000);
                     
-                    console.log(`🔄 Reconnecting in ${delay}ms... (attempt ${reconnectAttemptsRef.current})`);
+                    //console.log(`🔄 Reconnecting in ${delay}ms... (attempt ${reconnectAttemptsRef.current})`);
                     
                     reconnectTimeoutRef.current = setTimeout(() => {
                         connect();
