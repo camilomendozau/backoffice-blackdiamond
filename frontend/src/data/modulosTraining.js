@@ -1,5 +1,5 @@
 import module1 from "../assets/training/module1.mp4";
-import module2 from "../assets/training/module2.mp4";
+import module2 from "https://res.cloudinary.com/dbnf8c8jf/video/upload/v1780706844/module2_tfqogt.mp4";
 export const modulos = [
   {
     id: 1,
