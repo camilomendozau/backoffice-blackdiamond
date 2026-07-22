@@ -116,12 +116,17 @@ CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
 
 # CORS
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "https://ffacng.up.railway.app",
+#     "http://127.0.0.1:8000",
+#     "http://localhost:4321"
+# ]
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[
     "http://localhost:3000",
-    "https://ffacng.up.railway.app",
     "http://127.0.0.1:8000",
     "http://localhost:4321"
-]
+])
 # Django Rest Framework + Djoser + JWT
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
