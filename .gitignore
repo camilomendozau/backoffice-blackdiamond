@@ -43,8 +43,6 @@ frontend/yarn-error.log*
 # Assets grandes que van a Cloudinary
 frontend/src/assets/training/
 
-# ─── Docker ─────────────────────────────────────────────
-.dockerignore
 
 # ─── IDEs ───────────────────────────────────────────────
 .vscode/

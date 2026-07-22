@@ -1,0 +1,26 @@
+# Git
+.git
+.gitignore
+
+# Entorno
+.env
+*.env
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+
+# Node
+frontend/node_modules/
+frontend/build/
+
+# Static generado
+static/
+
+# IDE
+.vscode/
+.idea/
+
+# DB local
+*.sqlite3
