@@ -22,7 +22,7 @@ const ProspectPageConfig = () => {
     const templateSeleccionado = TEMPLATES.find((t) => t.id === seleccionTemplate);
     const layoutSeleccionado = LAYOUTS.find((l) => l.id === seleccionLayout);
 
-    let urlActual = `http://localhost:4321/?${userInfo?"ir="+userInfo.code:''}&th=${temaSeleccionado?.id ?? 'biogreen'}&t=${templateSeleccionado?.id ?? 'classic'}&l=${layoutSeleccionado?.id ?? 'default'}`;
+    let urlActual = `${process.env.PROSPECT_PAGE_BASE_URL}/?${userInfo?"ir="+userInfo.code:''}&th=${temaSeleccionado?.id ?? 'biogreen'}&t=${templateSeleccionado?.id ?? 'classic'}&l=${layoutSeleccionado?.id ?? 'default'}`;
 
 
     const manageSelectionTheme = (id) => {
