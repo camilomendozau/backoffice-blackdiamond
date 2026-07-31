@@ -50,10 +50,10 @@ function DashboardHome() {
                     <div class="card text-center">
                         <div class="card-body">
                             <h5 class="card-title">Enlace de Pagina de Prospecto</h5>
-                            <code class="card-text">{process.env.PROSPECT_PAGE_BASE_URL??"http://localhost:4321"}</code>
+                            <code class="card-text">{process.env.PROSPECT_PAGE_BASE_URL??"https://blackdiamondteam.online"}</code>
                             <span className="ms-3 d-flex align-items-center justify-content-around">
-                                <CopyToClipboardButton text={process.env.PROSPECT_PAGE_BASE_URL??"http://localhost:4321"} />
-                                <a href={process.env.PROSPECT_PAGE_BASE_URL??"http://localhost:4321"} target="_blank" rel="noopener noreferrer">
+                                <CopyToClipboardButton text={process.env.PROSPECT_PAGE_BASE_URL??"https://blackdiamondteam.online"} />
+                                <a href={process.env.PROSPECT_PAGE_BASE_URL??"https://blackdiamondteam.online"} target="_blank" rel="noopener noreferrer">
                                     <i class="fa-solid fa-arrow-up-right-from-square fs-6"></i>
                                 </a>
                             </span>    
