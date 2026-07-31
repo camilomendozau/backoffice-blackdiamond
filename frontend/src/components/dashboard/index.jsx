@@ -50,10 +50,10 @@ function DashboardHome() {
                     <div class="card text-center">
                         <div class="card-body">
                             <h5 class="card-title">Enlace de Pagina de Prospecto</h5>
-                            <code class="card-text">{prospectPageUrl??"http://localhost:4321"}</code>
+                            <code class="card-text">{process.env.PROSPECT_PAGE_BASE_URL??"http://localhost:4321"}</code>
                             <span className="ms-3 d-flex align-items-center justify-content-around">
-                                <CopyToClipboardButton text={prospectPageUrl??"http://localhost:4321"} />
-                                <a href={prospectPageUrl??"http://localhost:4321"} target="_blank" rel="noopener noreferrer">
+                                <CopyToClipboardButton text={process.env.PROSPECT_PAGE_BASE_URL??"http://localhost:4321"} />
+                                <a href={process.env.PROSPECT_PAGE_BASE_URL??"http://localhost:4321"} target="_blank" rel="noopener noreferrer">
                                     <i class="fa-solid fa-arrow-up-right-from-square fs-6"></i>
                                 </a>
                             </span>    
@@ -66,9 +66,9 @@ function DashboardHome() {
                         <div class="card text-center">
                             <div class="card-body">
                                 <h5 class="card-title">Enlace de invitacion a Crear Cuenta</h5>
-                                <code class="card-text m-1">{"127.0.0.1:8000/signup/?refCode="+userInfo.code}</code>
+                                <code class="card-text m-1">{process.env.REACT_APP_API_URL+"/signup/?refCode="+userInfo.code}</code>
                                 <span className="ms-3">
-                                    <CopyToClipboardButton text={"127.0.0.1:8000/signup/?refCode="+userInfo.code} />
+                                    <CopyToClipboardButton text={process.env.REACT_APP_API_URL+"/signup/?refCode="+userInfo.code} />
                                 </span>
                             </div>
                         </div>
